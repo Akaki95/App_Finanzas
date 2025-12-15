@@ -1,20 +1,17 @@
 // Modelo de Configuración - Gestiona la configuración de formularios
 const ConfigModel = {
   STORAGE_KEY: 'finanzas_config',
-  API_BASE: null, // Se cargará dinámicamente desde config.json
-  // Cargar configuración externa (config.json) para la URL del backend
+  API_BASE: null, // Se cargará dinámicamente desde env_config.js
+  // Cargar configuración externa (env_config.js) para la URL del backend
   async loadApiBase() {
     if (window.location.hostname === 'localhost') {
       this.API_BASE = 'http://localhost:3000/api';
       return;
     }
-    try {
-      const response = await fetch('js/config.json');
-      if (!response.ok) throw new Error('No se pudo cargar config.json');
-      const data = await response.json();
-      this.API_BASE = data.API_BASE;
-    } catch (e) {
-      console.error('No se pudo cargar la URL del backend desde config.json:', e);
+    if (window.APP_ENV && window.APP_ENV.API_BASE) {
+      this.API_BASE = window.APP_ENV.API_BASE;
+    } else {
+      console.error('No se pudo cargar la URL del backend desde env_config.js');
       this.API_BASE = '';
     }
   },
