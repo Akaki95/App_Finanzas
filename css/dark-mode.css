@@ -1,0 +1,536 @@
+/* Dark Mode Styles */
+
+/* Transiciones suaves para el cambio de tema */
+* {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+*:where(:not(canvas)) {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+[data-theme="dark"] {
+  /* Colores principales - Tonos grises */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #242424;
+  --bg-tertiary: #2d2d2d;
+  
+  /* Textos */
+  --text-primary: #e5e5e5;
+  --text-secondary: #a3a3a3;
+  --text-tertiary: #737373;
+  
+  /* Bordes y separadores */
+  --border-color: #3a3a3a;
+  --border-hover: #4a4a4a;
+  
+  /* Colores de acento (mantienen su esencia pero más suaves) */
+  --primary-color: #4ade80;
+  --secondary-color: #60a5fa;
+  --success-color: #4ade80;
+  --danger-color: #f87171;
+  --warning-color: #fbbf24;
+  --info-color: #60a5fa;
+  
+  /* Sombras adaptadas */
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.6), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+}
+
+/* Ajustes específicos para dark mode */
+[data-theme="dark"] .card,
+[data-theme="dark"] .modal-content,
+[data-theme="dark"] .chart-card {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .form-input,
+[data-theme="dark"] .form-select,
+[data-theme="dark"] .form-textarea,
+[data-theme="dark"] .date-input {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-input:focus,
+[data-theme="dark"] .form-select:focus,
+[data-theme="dark"] .form-textarea:focus,
+[data-theme="dark"] .date-input:focus {
+  border-color: var(--primary-color);
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .table {
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .table thead {
+  background: var(--bg-tertiary);
+  border-bottom: 2px solid var(--border-color);
+}
+
+[data-theme="dark"] .table tbody tr {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .table tbody tr:hover {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .modal-overlay {
+  background: rgba(0, 0, 0, 0.85);
+}
+
+[data-theme="dark"] .sidebar {
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .nav-link:hover {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .nav-link.active {
+  background: var(--bg-tertiary);
+  border-left: 3px solid var(--primary-color);
+}
+
+/* Summary cards en dark mode con gradientes más oscuros */
+[data-theme="dark"] .summary-card.ingresos {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%);
+}
+
+[data-theme="dark"] .summary-card.gastos {
+  background: linear-gradient(135deg, #b91c1c 0%, #991b1b 100%);
+}
+
+[data-theme="dark"] .summary-card.balance {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+}
+
+[data-theme="dark"] .summary-card.patrimonio {
+  background: linear-gradient(135deg, #7c3aed 0%, #6b21a8 100%);
+}
+
+[data-theme="dark"] .summary-card.ahorros {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+}
+
+/* Badges y chips */
+[data-theme="dark"] .badge,
+[data-theme="dark"] .category-chip {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+/* Items list */
+[data-theme="dark"] .item {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .item:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .item-detalles {
+  background: var(--bg-tertiary);
+  border-top: 1px solid var(--border-color);
+}
+
+/* Chart date filter */
+[data-theme="dark"] .chart-date-filter {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+/* Botones en dark mode */
+[data-theme="dark"] .btn-secondary {
+  background: var(--bg-tertiary);
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: var(--bg-secondary);
+  border-color: var(--border-hover);
+}
+
+/* Transaction items */
+[data-theme="dark"] .transaction-item {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .transaction-item:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Config list */
+[data-theme="dark"] .config-list {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .config-item {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .config-item:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Empty states */
+[data-theme="dark"] .empty-state-icon {
+  opacity: 0.2;
+}
+
+/* Scrollbar en dark mode */
+[data-theme="dark"] ::-webkit-scrollbar {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: var(--border-hover);
+}
+
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #52525b;
+}
+
+/* Header y navegación */
+[data-theme="dark"] .header {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .logo {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .nav-btn {
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+[data-theme="dark"] .nav-btn:hover,
+[data-theme="dark"] .nav-btn.active {
+  color: var(--primary-color);
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .config-btn {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .config-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--primary-color);
+}
+
+/* Títulos y textos */
+[data-theme="dark"] .section-title,
+[data-theme="dark"] .dashboard-title,
+[data-theme="dark"] .chart-title,
+[data-theme="dark"] .card-title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .dashboard-subtitle,
+[data-theme="dark"] .item-subtitle,
+[data-theme="dark"] .transaction-meta {
+  color: var(--text-secondary);
+}
+
+/* Botones primarios y danger */
+[data-theme="dark"] .btn-primary {
+  background: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #000;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background: #22c55e;
+  border-color: #22c55e;
+}
+
+[data-theme="dark"] .btn-danger {
+  background: var(--danger-color);
+  border-color: var(--danger-color);
+  color: #fff;
+}
+
+[data-theme="dark"] .btn-danger:hover {
+  background: #dc2626;
+  border-color: #dc2626;
+}
+
+/* Tabs de configuración */
+[data-theme="dark"] .config-tabs {
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .config-tab {
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+[data-theme="dark"] .config-tab:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .config-tab.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* Form labels y grupos */
+[data-theme="dark"] .form-label {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .form-error {
+  background: rgba(248, 113, 113, 0.1);
+  border-color: var(--danger-color);
+  color: var(--danger-color);
+}
+
+/* Modal header */
+[data-theme="dark"] .modal-header {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .modal-title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .modal-close {
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+[data-theme="dark"] .modal-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+/* Estadísticas y valores */
+[data-theme="dark"] .text-success {
+  color: #4ade80 !important;
+}
+
+[data-theme="dark"] .text-danger {
+  color: #f87171 !important;
+}
+
+[data-theme="dark"] .item-amount {
+  color: var(--text-primary);
+}
+
+/* Action buttons */
+[data-theme="dark"] .item-action-btn {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .item-action-btn:hover {
+  background: var(--bg-primary);
+  border-color: var(--border-hover);
+}
+
+[data-theme="dark"] .item-action-btn.delete:hover {
+  background: rgba(248, 113, 113, 0.1);
+  border-color: var(--danger-color);
+  color: var(--danger-color);
+}
+
+/* Sync status */
+[data-theme="dark"] .sync-status {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .sync-indicator {
+  background: var(--success-color);
+}
+
+/* Config fields */
+[data-theme="dark"] .config-field {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .config-field:hover {
+  border-color: var(--border-hover);
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .field-badge {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+}
+
+/* Drag and drop states */
+[data-theme="dark"] .dragging {
+  opacity: 0.5;
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .drag-over {
+  border-color: var(--primary-color);
+  background: rgba(74, 222, 128, 0.1);
+}
+
+/* Icon picker */
+[data-theme="dark"] .icon-grid {
+  background: var(--bg-secondary);
+}
+
+[data-theme="dark"] .icon-item {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .icon-item:hover,
+[data-theme="dark"] .icon-item.selected {
+  border-color: var(--primary-color);
+  background: rgba(74, 222, 128, 0.1);
+}
+
+/* Recent transactions */
+[data-theme="dark"] .transaction-description {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .transaction-amount.gasto {
+  color: var(--danger-color);
+}
+
+[data-theme="dark"] .transaction-amount.ingreso {
+  color: var(--success-color);
+}
+
+/* Pagos historial */
+[data-theme="dark"] .pagos-historial {
+  background: rgba(45, 45, 45, 0.5);
+}
+
+[data-theme="dark"] .pagos-titulo {
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .pago-item {
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .pago-fecha {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .pago-monto {
+  color: var(--text-primary);
+}
+
+/* Deuda resumen */
+[data-theme="dark"] .deuda-resumen {
+  background: rgba(45, 45, 45, 0.3);
+  border-bottom: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .deuda-stat-label {
+  color: var(--text-secondary);
+}
+
+/* Info Banner en dark mode */
+[data-theme="dark"] .info-banner {
+  background-color: rgba(33, 150, 243, 0.1);
+  border-color: rgba(33, 150, 243, 0.3);
+}
+
+[data-theme="dark"] .info-banner-text {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .info-banner-text strong {
+  color: #64b5f6;
+}
+
+/* Saldo info en dark mode */
+[data-theme="dark"] .saldo-info {
+  background-color: rgba(14, 165, 233, 0.1);
+  border-color: rgba(14, 165, 233, 0.3);
+}
+
+[data-theme="dark"] .saldo-label {
+  color: var(--text-secondary);
+}
+
+/* Auditoría en dark mode */
+[data-theme="dark"] .auditoria-balance-info {
+  background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+}
+
+[data-theme="dark"] .cuentas-list {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .cuenta-item {
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .total-cuentas {
+  background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .diferencia-section {
+  background-color: rgba(255, 193, 7, 0.1);
+  border-color: rgba(255, 193, 7, 0.3);
+}
+
+[data-theme="dark"] .diferencia-section.success {
+  background-color: rgba(40, 167, 69, 0.1);
+  border-color: rgba(40, 167, 69, 0.3);
+}
+
+[data-theme="dark"] .auditoria-item {
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .auditoria-item.success {
+  border-color: #15803d;
+}
+
+[data-theme="dark"] .auditoria-item.error {
+  border-color: #ea580c;
+}
+
+[data-theme="dark"] .auditoria-header {
+  background-color: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .auditoria-header:hover {
+  background-color: rgba(45, 45, 45, 0.8);
+}
+
+[data-theme="dark"] .auditoria-detalle {
+  background-color: var(--bg-secondary);
+}
+
+[data-theme="dark"] .auditoria-notas {
+  border-top-color: var(--border-color);
+}
+
+[data-theme="dark"] .auditoria-actions {
+  border-top-color: var(--border-color);
+}
+
+[data-theme="dark"] .deuda-stat-value {
+  color: var(--text-primary);
+}
