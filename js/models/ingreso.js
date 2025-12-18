@@ -32,6 +32,8 @@ const IngresoModel = {
       tipo: ValidationService.sanitizarTexto(ingresoData.tipo),
       esAutomatico: ingresoData.esAutomatico || false,
       reglaId: ingresoData.reglaId || null,
+      origenGrupo: ingresoData.origenGrupo || false,
+      grupoId: ingresoData.grupoId || null,
       createdAt: new Date().toISOString()
     };
     

@@ -234,16 +234,21 @@ const DashboardView = {
       ...gastos.map(g => ({...g, tipo: 'gasto'})),
       ...ingresos.map(i => ({...i, tipo: 'ingreso'}))
     ].sort((a, b) => new Date(b.fecha) - new Date(a.fecha)).slice(0, 10);
-    
+
     if (todas.length === 0) {
       return '<div class="empty-state"><div class="empty-state-text">No hay transacciones recientes</div></div>';
     }
-    
-    return todas.map(t => `
+
+    return todas.map(t => {
+      let origen = '';
+      if (t.origenGrupo) {
+        origen = `<span class="grupo-origen">(de grupo)</span> `;
+      }
+      return `
       <div class="transaction-item">
         <div class="transaction-info">
           <div class="transaction-description">
-            ${t.tipo === 'gasto' ? '💸' : '💰'} ${t.descripcion || (t.categoria || t.tipo)}
+            ${t.tipo === 'gasto' ? '💸' : '💰'} ${origen}${t.descripcion || (t.categoria || t.tipo)}
           </div>
           <div class="transaction-meta">
             ${new Date(t.fecha).toLocaleDateString('es-ES', { day: 'numeric', month: 'short', year: 'numeric' })}
@@ -253,7 +258,8 @@ const DashboardView = {
           ${t.tipo === 'gasto' ? '-' : '+'}${Calculations.formatearMoneda(t.monto)}
         </div>
       </div>
-    `).join('');
+      `;
+    }).join('');
   },
   
   renderCharts() {

@@ -10,7 +10,7 @@ const GastoAutomaticoModel = {
       this.API_BASE = ConfigModel.API_BASE;
     }
     try {
-      const res = await fetch(`${this.API_BASE}/api/gastos_automaticos`);
+      const res = await fetch(`${this.API_BASE}/gastos_automaticos`);
       const json = await res.json();
       if (json.success) {
         // Normalizar reglas: usar _id como id si no existe
@@ -35,7 +35,7 @@ const GastoAutomaticoModel = {
       this.API_BASE = ConfigModel.API_BASE;
     }
     try {
-      const res = await fetch(`${this.API_BASE}/api/gastos_automaticos/${id}`);
+      const res = await fetch(`${this.API_BASE}/gastos_automaticos/${id}`);
       const json = await res.json();
       if (json.success) {
         // Normalizar: asegurar que tenga id
@@ -65,7 +65,7 @@ const GastoAutomaticoModel = {
         activo: true,
         ultimaAplicacion: null
       };
-      const res = await fetch(`${this.API_BASE}/api/gastos_automaticos`, {
+      const res = await fetch(`${this.API_BASE}/gastos_automaticos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(regla)

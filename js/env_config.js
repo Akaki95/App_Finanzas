@@ -1,3 +1,1 @@
-// Este archivo será generado automáticamente por generate-env-config.js
-// No editar manualmente.
-window.APP_ENV = { API_BASE: "" };
+window.APP_ENV = { API_BASE: "http://localhost:3000/api" };

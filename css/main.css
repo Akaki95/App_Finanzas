@@ -1,3 +1,13 @@
+/* Botón deshabilitado visualmente */
+.btn-disabled,
+button:disabled,
+.btn[disabled] {
+  opacity: 0.5 !important;
+  cursor: not-allowed !important;
+  filter: grayscale(0.5);
+  pointer-events: none;
+  box-shadow: none;
+}
 /* Variables CSS */
 :root {
   --primary-color: #4CAF50;

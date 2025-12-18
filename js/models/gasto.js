@@ -32,6 +32,8 @@ const GastoModel = {
       categoria: ValidationService.sanitizarTexto(gastoData.categoria),
       esAutomatico: gastoData.esAutomatico || false,
       reglaId: gastoData.reglaId || null,
+      origenGrupo: gastoData.origenGrupo || false,
+      grupoId: gastoData.grupoId || null,
       createdAt: new Date().toISOString()
     };
     

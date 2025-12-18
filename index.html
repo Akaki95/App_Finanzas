@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="css/patrimonio.css">
   <link rel="stylesheet" href="css/cashflow.css">
   <link rel="stylesheet" href="css/dark-mode.css">
+  <link rel="stylesheet" href="css/grupoGastoView.custom.css">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2300b894'/%3E%3Ctext x='16' y='21' font-size='16' text-anchor='middle' fill='white' font-family='Arial'%3E$%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
@@ -23,7 +24,9 @@
         <nav class="nav" id="nav">
           <button class="nav-btn" data-route="dashboard">Dashboard</button>
           <button class="nav-btn" data-route="gastos">Gastos</button>
+          <button class="nav-btn" data-route="grupo_gastos">Grupos de Gastos</button>
           <button class="nav-btn" data-route="ingresos">Ingresos</button>
+          <button class="nav-btn" data-route="grupo_ingresos">Grupos de Ingresos</button>
           <button class="nav-btn" data-route="deudas">Deudas</button>
           <button class="nav-btn" data-route="prestamos">Préstamos</button>
           <button class="nav-btn" data-route="patrimonio">Patrimonio</button>
@@ -96,6 +99,11 @@
   <script src="js/models/cashflow.js"></script>
   <script src="js/models/auditoria.js"></script>
   <script src="js/controllers/gastosController.js"></script>
+  <script src="js/models/grupoGasto.js"></script>
+  <script src="js/views/grupoGastoView.js"></script>
+  <script src="js/models/grupoIngreso.js"></script>
+  <script src="js/views/grupoIngresoView.js"></script>
+  <script src="js/controllers/gruposController.js"></script>
   <script src="js/controllers/ingresosController.js"></script>
   <script src="js/controllers/deudasController.js"></script>
   <script src="js/controllers/prestamosController.js"></script>

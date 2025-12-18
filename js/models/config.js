@@ -4,16 +4,31 @@ const ConfigModel = {
   API_BASE: null, // Se cargará dinámicamente desde env_config.js
   // Cargar configuración externa (env_config.js) para la URL del backend
   async loadApiBase() {
+    // 1. Si hay variable de entorno (deploy, docker, etc), usarla
+    if (window.APP_ENV && window.APP_ENV.API_BASE && window.APP_ENV.API_BASE !== "") {
+      this.API_BASE = window.APP_ENV.API_BASE;
+      return;
+    }
+    // 2. Si estamos en localhost, usar backend local
     if (window.location.hostname === 'localhost') {
       this.API_BASE = 'http://localhost:3000/api';
       return;
     }
-    if (window.APP_ENV && window.APP_ENV.API_BASE) {
-      this.API_BASE = window.APP_ENV.API_BASE;
-    } else {
-      console.error('No se pudo cargar la URL del backend desde env_config.js');
-      this.API_BASE = '';
+    // 3. Si se abre como archivo local (file://), forzar backend local
+    if (window.location.protocol === 'file:') {
+      this.API_BASE = 'http://localhost:3000/api';
+      return;
     }
+    // 4. Si es una IP local (192.168.x.x, 10.x.x.x, 172.16-31.x.x), usar backend local
+    const ip = window.location.hostname;
+    const isLocalIp = /^192\.168\.|^10\.|^172\.(1[6-9]|2[0-9]|3[01])\./.test(ip);
+    if (isLocalIp) {
+      this.API_BASE = 'http://localhost:3000/api';
+      return;
+    }
+    // 5. Fallback: forzar backend local si todo falla
+    this.API_BASE = 'http://localhost:3000/api';
+    console.warn('No se pudo detectar entorno, se fuerza API_BASE a http://localhost:3000/api');
   },
 
   // Configuración por defecto para cada módulo

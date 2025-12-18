@@ -14,7 +14,7 @@ const IngresoAutomaticoModel = {
   async getAll() {
     await this.initApiBase();
     try {
-      const res = await fetch(`${this.API_BASE}/api/ingresos_automaticos`);
+      const res = await fetch(`${this.API_BASE}/ingresos_automaticos`);
       const json = await res.json();
       if (json.success) {
         // Normalizar reglas: usar _id como id si no existe
@@ -36,7 +36,7 @@ const IngresoAutomaticoModel = {
   async getById(id) {
     await this.initApiBase();
     try {
-      const res = await fetch(`${this.API_BASE}/api/ingresos_automaticos/${id}`);
+      const res = await fetch(`${this.API_BASE}/ingresos_automaticos/${id}`);
       const json = await res.json();
       if (json.success) {
         // Normalizar: asegurar que tenga id
@@ -63,7 +63,7 @@ const IngresoAutomaticoModel = {
         ultimaAplicacion: null
       };
       
-      const res = await fetch(`${this.API_BASE}/api/ingresos_automaticos`, {
+      const res = await fetch(`${this.API_BASE}/ingresos_automaticos`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(regla)

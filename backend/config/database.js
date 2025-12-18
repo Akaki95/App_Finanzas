@@ -1,4 +1,5 @@
 const { MongoClient } = require('mongodb');
+const mongoose = require('mongoose');
 const dns = require('dns');
 require('dotenv').config();
 
@@ -23,6 +24,15 @@ async function connectDB() {
     }
 
     console.log('Conectando a MongoDB Atlas...');
+    
+    // Conectar con Mongoose para los modelos
+    await mongoose.connect(uri, {
+      dbName: dbName,
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
+    
+    // También conectar con MongoClient nativo para operaciones directas
     client = new MongoClient(uri, {
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,

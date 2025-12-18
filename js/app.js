@@ -9,8 +9,8 @@
     // Inicializar tema
     ConfigController.initTheme();
 
-    // Inicializar servicios
-    SyncService.init();
+    // Inicializar servicios y esperar a que termine
+    await SyncService.init();
 
     // OPTIMIZACIÓN: Cargar TODOS los datos solo una vez al iniciar
     await cargarDatosIniciales();
@@ -44,7 +44,9 @@
 
     Router.register('dashboard', () => renderWithSelectiveSync(() => DashboardView.render(), ['gastos', 'ingresos', 'deudas', 'prestamos', 'activos', 'pasivos']));
     Router.register('gastos', () => renderWithSelectiveSync(() => GastosController.render(), ['gastos']));
+    Router.register('grupo_gastos', () => renderWithSelectiveSync(() => GruposGastoController.render(), ['grupo_gastos']));
     Router.register('ingresos', () => renderWithSelectiveSync(() => IngresosController.render(), ['ingresos']));
+    Router.register('grupo_ingresos', () => renderWithSelectiveSync(() => GruposIngresoController.render(), ['grupo_ingresos']));
     Router.register('deudas', () => renderWithSelectiveSync(() => DeudasController.render(), ['deudas']));
     Router.register('prestamos', () => renderWithSelectiveSync(() => PrestamosController.render(), ['prestamos']));
     Router.register('patrimonio', () => renderWithSelectiveSync(() => PatrimonioController.render(), ['activos', 'pasivos']));

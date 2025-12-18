@@ -58,7 +58,7 @@ const IngresosController = {
                     ${ingresos.map(i => `
                       <tr>
                         <td>${new Date(i.fecha).toLocaleDateString('es-ES')}</td>
-                        <td>${i.descripcion || '-'}</td>
+                        <td>${i.descripcion || '-'}${i.origenGrupo ? ' <span class="grupo-origen">(de grupo)</span>' : ''}</td>
                         <td><span class="badge badge-success">${i.tipo}</span></td>
                         <td class="text-success">${Calculations.formatearMoneda(i.monto)}</td>
                         <td>
@@ -84,7 +84,7 @@ const IngresosController = {
                     </div>
                     <div class="mobile-item-details">
                       <div style="margin-bottom: var(--spacing-sm);">
-                        <strong>Descripción:</strong> ${i.descripcion || '-'}
+                        <strong>Descripción:</strong> ${i.descripcion || '-'}${i.origenGrupo ? ' <span class=\"grupo-origen\">(de grupo)</span>' : ''}
                       </div>
                       <div style="display: flex; gap: var(--spacing-sm);">
                         <button class="btn btn-small btn-secondary" 

@@ -14,7 +14,13 @@ const SyncService = {
   async init() {
     this.statusElement = document.getElementById('sync-status');
     await ConfigModel.loadApiBase();
-    this.apiBaseUrl = ConfigModel.API_BASE;
+    // Esperar hasta que API_BASE esté correctamente definido
+    let retries = 0;
+    while ((!ConfigModel.API_BASE || ConfigModel.API_BASE === '' || ConfigModel.API_BASE === null) && retries < 10) {
+      await new Promise(res => setTimeout(res, 100));
+      retries++;
+    }
+    this.apiBaseUrl = ConfigModel.API_BASE || 'http://localhost:3000/api';
     this.loadCollectionTimestamps();
     this.checkBackendConnection();
     // Escuchar eventos de conexión

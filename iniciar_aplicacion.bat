@@ -24,6 +24,12 @@ if not exist "backend\node_modules" (
     echo.
 )
 
+
+REM Generar js/env_config.js con la URL correcta antes de iniciar el frontend
+echo Generando configuracion de entorno para el frontend...
+set API_BASE=http://localhost:3000/api
+node generate-env-config.js
+
 REM Iniciar backend en una nueva ventana
 echo Iniciando backend en http://localhost:3000...
 start "Backend - Finanzas" cmd /k "cd /d %~dp0backend && node server.js"

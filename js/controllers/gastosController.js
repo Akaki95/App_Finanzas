@@ -73,7 +73,7 @@ const GastosController = {
                     ${gastos.map(gasto => `
                       <tr>
                         <td>${new Date(gasto.fecha).toLocaleDateString('es-ES')}</td>
-                        <td>${gasto.descripcion || '-'}</td>
+                        <td>${gasto.descripcion || '-'}${gasto.origenGrupo ? ' <span class="grupo-origen">(de grupo)</span>' : ''}</td>
                         <td><span class="category-chip category-${gasto.categoria.toLowerCase()}">${gasto.categoria}</span></td>
                         <td class="text-danger">${Calculations.formatearMoneda(gasto.monto)}</td>
                         <td>
@@ -101,7 +101,7 @@ const GastosController = {
                     </div>
                     <div class="mobile-item-details">
                       <div style="margin-bottom: var(--spacing-sm);">
-                        <strong>Descripción:</strong> ${gasto.descripcion || '-'}
+                        <strong>Descripción:</strong> ${gasto.descripcion || '-'}${gasto.origenGrupo ? ' <span class=\"grupo-origen\">(de grupo)</span>' : ''}
                       </div>
                       <div style="display: flex; gap: var(--spacing-sm);">
                         <button class="btn btn-small btn-secondary" 

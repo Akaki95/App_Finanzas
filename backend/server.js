@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const { connectDB } = require('./config/database');
@@ -25,6 +26,8 @@ const auditoriaRoutes = require('./routes/auditoria');
 const configuracionCuentasRoutes = require('./routes/configuracion_cuentas');
 const cashflowIngresosRoutes = require('./routes/cashflow_ingresos');
 const cashflowGastosRoutes = require('./routes/cashflow_gastos');
+const grupoGastosRoutes = require('./routes/grupo_gastos');
+const grupoIngresosRoutes = require('./routes/grupo_ingresos');
 
 // Usar rutas
 app.use('/api/gastos', gastosRoutes);
@@ -41,6 +44,8 @@ app.use('/api/auditorias', auditoriaRoutes);
 app.use('/api/configuracion_cuentas', configuracionCuentasRoutes);
 app.use('/api/cashflow_ingresos', cashflowIngresosRoutes);
 app.use('/api/cashflow_gastos', cashflowGastosRoutes);
+app.use('/api/grupo_gastos', grupoGastosRoutes);
+app.use('/api/grupo_ingresos', grupoIngresosRoutes);
 
 // Ruta de prueba
 app.get('/', (req, res) => {
