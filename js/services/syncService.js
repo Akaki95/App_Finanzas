@@ -165,8 +165,22 @@ const SyncService = {
     
     try {
       switch (action) {
-        case 'create':
-          return await this.insertOne(collection, data);
+        case 'create': {
+          const result = await this.insertOne(collection, data);
+          // Actualizar el grupo local con el _id recibido del backend
+          if ((collection === 'grupo_ingresos' || collection === 'grupo_gastos') && result && result._id) {
+            const grupos = CacheService.get(collection) || [];
+            // Buscar el grupo por id local
+            const idx = grupos.findIndex(g => g.id === data.id);
+            if (idx !== -1) {
+              grupos[idx]._id = result._id;
+              // Opcional: actualizar otros campos si el backend los modifica
+              grupos[idx] = { ...grupos[idx], ...result };
+              CacheService.set(collection, grupos);
+            }
+          }
+          return result;
+        }
         case 'update':
           return await this.updateOne(collection, id, data);
         case 'delete':

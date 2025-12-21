@@ -5,7 +5,10 @@
       let grupos = this.getAll();
       grupos = grupos.filter(g => g.id !== id);
       CacheService.set(this.collectionName, grupos);
-      SyncService.addToQueue({ collection: this.collectionName, action: 'delete', id });
+      // Usar _id si existe para sincronizar con backend
+      const grupo = this.getById(id);
+      const syncId = grupo && grupo._id ? grupo._id : id;
+      SyncService.addToQueue({ collection: this.collectionName, action: 'delete', id: syncId });
     },
         // Editar un movimiento existente
     editarMovimiento(grupoId, idx, nuevoMovimiento) {
@@ -18,7 +21,9 @@
       grupo.movimientos[idx] = { ...grupo.movimientos[idx], ...nuevoMovimiento };
       grupo.total += nuevoMovimiento.monto;
       CacheService.set(this.collectionName, grupos);
-      SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: grupoId, data: grupo });
+      // Usar _id si existe para sincronizar con backend
+      const syncId = grupo && grupo._id ? grupo._id : grupoId;
+      SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: grupo });
       return grupo;
     },
 
@@ -31,7 +36,9 @@
       grupo.total -= grupo.movimientos[idx].monto;
       grupo.movimientos.splice(idx, 1);
       CacheService.set(this.collectionName, grupos);
-      SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: grupoId, data: grupo });
+      // Usar _id si existe para sincronizar con backend
+      const syncId = grupo && grupo._id ? grupo._id : grupoId;
+      SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: grupo });
       return grupo;
     },
   collectionName: 'grupo_gastos',
@@ -76,7 +83,9 @@
     grupo.movimientos.push(movimiento);
     grupo.total += movimiento.monto;
     CacheService.set(this.collectionName, grupos);
-    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: grupoId, data: grupo });
+    // Usar _id si existe para sincronizar con backend
+    const syncId = grupo && grupo._id ? grupo._id : grupoId;
+    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: grupo });
     return grupo;
   },
 
@@ -87,7 +96,9 @@
     grupo.estado = 'cerrado';
     grupo.fechaCierre = new Date().toISOString();
     CacheService.set(this.collectionName, grupos);
-    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: grupoId, data: grupo });
+    // Usar _id si existe para sincronizar con backend
+    const syncId = grupo && grupo._id ? grupo._id : grupoId;
+    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: grupo });
     // Crear gasto resumen en GastoModel
     GastoModel.create({
       fecha: grupo.fechaCierre,
@@ -97,7 +108,7 @@
       esAutomatico: false,
       reglaId: null,
       origenGrupo: true,
-      grupoId: grupo.id
+      grupoId: grupo._id || grupo.id
     });
     return grupo;
   }
