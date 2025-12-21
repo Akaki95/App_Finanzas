@@ -85,7 +85,11 @@
 @media (max-width: 768px) {
   .nav.show {
     max-height: 80vh;
+    min-height: 0;
     top: 50px;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
   }
 }
 
