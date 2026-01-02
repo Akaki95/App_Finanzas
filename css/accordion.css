@@ -1,0 +1,175 @@
+/* ========== ACCORDION (Contenedores Desplegables) ========== */
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.accordion-item {
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
+  background: var(--bg-primary);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Destacar el mes actual */
+.accordion-item.is-open {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+}
+
+.accordion-item:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  cursor: pointer;
+  background: var(--bg-secondary);
+  user-select: none;
+  transition: background 0.2s ease;
+}
+
+.accordion-header:hover {
+  background: var(--bg-hover);
+}
+
+.accordion-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex: 1;
+}
+
+.accordion-icon {
+  font-size: 1.5rem;
+}
+
+.accordion-label {
+  font-weight: 600;
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  text-transform: capitalize;
+}
+
+.accordion-count {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  background: var(--bg-primary);
+  border-radius: 12px;
+}
+
+.accordion-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.accordion-total {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.accordion-toggle {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  transition: transform 0.3s ease;
+}
+
+.accordion-item.is-open .accordion-toggle {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.accordion-item.is-open .accordion-content {
+  max-height: 5000px; /* Valor alto para permitir expansión completa */
+}
+
+.accordion-content > * {
+  padding: var(--spacing-md);
+}
+
+/* Ajustes para tablas dentro de accordion */
+.accordion-content .table-responsive {
+  padding: 0;
+}
+
+/* Estandarizar anchos de columnas en tablas de gastos/ingresos */
+.accordion-content .table {
+  table-layout: fixed;
+  width: 100%;
+}
+
+.accordion-content .table th:nth-child(1),
+.accordion-content .table td:nth-child(1) {
+  width: 12%;
+}
+
+.accordion-content .table th:nth-child(2),
+.accordion-content .table td:nth-child(2) {
+  width: 38%;
+}
+
+.accordion-content .table th:nth-child(3),
+.accordion-content .table td:nth-child(3) {
+  width: 18%;
+}
+
+.accordion-content .table th:nth-child(4),
+.accordion-content .table td:nth-child(4) {
+  width: 12%;
+  text-align: right;
+}
+
+.accordion-content .table th:nth-child(5),
+.accordion-content .table td:nth-child(5) {
+  width: 20%;
+  text-align: right;
+}
+
+.accordion-content .mobile-list {
+  padding: 0 var(--spacing-md) var(--spacing-md);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .accordion-header {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  
+  .accordion-label {
+    font-size: 1rem;
+  }
+  
+  .accordion-total {
+    font-size: 1rem;
+  }
+  
+  .accordion-count {
+    font-size: 0.75rem;
+  }
+  
+  .accordion-icon {
+    font-size: 1.2rem;
+  }
+  
+  /* Mantener anchos fijos en móvil para consistencia */
+  .accordion-content .table {
+    table-layout: auto;
+  }
+  
+  .accordion-content .table th,
+  .accordion-content .table td {
+    width: auto !important;
+  }
+}

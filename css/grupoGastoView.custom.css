@@ -1,47 +1,109 @@
-/* Fila de información superior */
-.card-info-row {
-	display: flex;
+/* Tarjetas de información del grupo */
+.grupo-info-cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 	gap: 16px;
-	justify-content: space-between;
+	margin-bottom: 24px;
+}
+
+.grupo-info-card {
+	background: var(--bg-primary);
+	border: 2px solid var(--border-color);
+	border-radius: 12px;
+	padding: 16px;
+	display: flex;
 	align-items: center;
-	margin: 16px 0 12px 0;
-	flex-wrap: wrap;
+	gap: 12px;
+	transition: all 0.3s ease;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
-.info-descripcion {
-	background: #f3f4f8;
-	color: #333;
-	padding: 6px 16px;
-	border-radius: 16px;
+
+.grupo-info-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.info-card-icon {
+	font-size: 2rem;
+	width: 50px;
+	height: 50px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--bg-secondary);
+	border-radius: 10px;
+	flex-shrink: 0;
+}
+
+.info-card-content {
+	flex: 1;
+	min-width: 0;
+}
+
+.info-card-label {
+	font-size: 0.75rem;
+	color: var(--text-secondary);
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	font-weight: 600;
+	margin-bottom: 4px;
+}
+
+.info-card-value {
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: var(--text-primary);
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* Estilos específicos por tipo de tarjeta */
+.info-descripcion-card {
+	grid-column: span 2;
+}
+
+.info-descripcion-card .info-card-value {
 	font-size: 1rem;
-	flex: 3 1 0%;
-	min-width: 120px;
-	text-align: left;
+	font-weight: 500;
+	white-space: normal;
+	overflow: visible;
 }
-.info-estado {
-	background: linear-gradient(90deg, #e0f7e9 60%, #d0f0ff 100%);
-	color: #219653;
-	padding: 6px 16px;
-	border-radius: 16px;
-	font-weight: 600;
-	flex: 1 1 0%;
-	min-width: 70px;
-	max-width: 140px;
-	text-align: center;
+
+.info-estado-card.abierto {
+	border-color: #4caf50;
+	background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, rgba(76, 175, 80, 0.1) 100%);
 }
-.info-estado.cerrado {
-	background: linear-gradient(90deg, #ffe0e0 60%, #ffe6d0 100%);
-	color: #c0392b;
+
+.info-estado-card.abierto .info-card-value {
+	color: #2e7d32;
 }
-.info-total {
-	background: #e3f0ff;
+
+.info-estado-card.cerrado {
+	border-color: #f44336;
+	background: linear-gradient(135deg, rgba(244, 67, 54, 0.05) 0%, rgba(244, 67, 54, 0.1) 100%);
+}
+
+.info-estado-card.cerrado .info-card-value {
+	color: #c62828;
+}
+
+.info-total-card {
+	border-color: #2196f3;
+	background: linear-gradient(135deg, rgba(33, 150, 243, 0.05) 0%, rgba(33, 150, 243, 0.1) 100%);
+}
+
+.info-total-card .info-card-value {
 	color: #1565c0;
-	padding: 6px 16px;
-	border-radius: 16px;
-	font-weight: 600;
-	flex: 1 1 0%;
-	min-width: 70px;
-	max-width: 140px;
-	text-align: right;
+}
+
+.info-count-card {
+	border-color: #9c27b0;
+	background: linear-gradient(135deg, rgba(156, 39, 176, 0.05) 0%, rgba(156, 39, 176, 0.1) 100%);
+}
+
+.info-count-card .info-card-value {
+	color: #7b1fa2;
 }
 
 /* Cabecero de tabla y filas */
@@ -80,7 +142,7 @@
 }
 
 /* Responsive: ocultar acciones y hacer filas clicables */
-@media (max-width: 700px) {
+@media (max-width: 768px) {
 	.table-custom-th:nth-child(4),
 	.table-custom-row td:nth-child(4) {
 		display: none;
@@ -95,7 +157,7 @@
 }
 
 /* --- Responsive mobile-list para movimientos de grupo de gastos --- */
-@media (max-width: 700px) {
+@media (max-width: 768px) {
   .table-responsive, .table-container table, .table-custom-thead, .table-custom-header-row, .table-custom-th, .table-custom-row, .table-custom-row td {
     display: none !important;
   }
@@ -152,26 +214,30 @@
 }
 
 /* Oculta la mobile-list en escritorio */
-@media (min-width: 701px) {
+@media (min-width: 769px) {
   .mobile-list {
     display: none !important;
   }
 }
 
 /* Estilos específicos para móviles */
-@media (max-width: 700px) {
-  .card-info-row {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 8px;
+@media (max-width: 768px) {
+  .grupo-info-cards {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
-  .info-descripcion,
-  .info-estado,
-  .info-total {
-    flex: 1 1 100%;
-    min-width: 0;
-    max-width: 100%;
-    text-align: center;
-    margin: 0;
+  
+  .info-descripcion-card {
+    grid-column: span 1;
+  }
+  
+  .info-card-value {
+    font-size: 1.1rem;
+  }
+  
+  .info-card-icon {
+    font-size: 1.5rem;
+    width: 40px;
+    height: 40px;
   }
 }

@@ -2,11 +2,14 @@
 const IngresosController = {
   render() {
     const mainContent = document.getElementById('main-content');
-    const ingresos = IngresoModel.getAll().sort((a, b) => {
+    const ingresosOrdenados = IngresoModel.getAll().sort((a, b) => {
       const fechaDiff = new Date(b.fecha) - new Date(a.fecha);
       if (fechaDiff !== 0) return fechaDiff;
       return b.id.localeCompare(a.id); // Si misma fecha, el más reciente (ID mayor) primero
     });
+    
+    // Agrupar ingresos por mes
+    const ingresosPorMes = this.agruparPorMes(ingresosOrdenados);
     
     mainContent.innerHTML = `
       <div class="container">
@@ -43,60 +46,14 @@ const IngresosController = {
         </div>
         
         <div class="card">
-          <div class="card-title">Listado de Ingresos</div>
+          <div class="card-title">Listado de Ingresos por Mes</div>
           <div class="table-container">
-            ${ingresos.length === 0 ? `
+            ${ingresosOrdenados.length === 0 ? `
               <div class="empty-state">
                 <div class="empty-state-icon">💰</div>
                 <div class="empty-state-title">No hay ingresos registrados</div>
               </div>
-            ` : `
-              <div class="table-responsive">
-                <table class="table">
-                  <thead><tr><th>Fecha</th><th>Descripción</th><th>Tipo</th><th>Monto</th><th>Acciones</th></tr></thead>
-                  <tbody>
-                    ${ingresos.map(i => `
-                      <tr>
-                        <td>${new Date(i.fecha).toLocaleDateString('es-ES')}</td>
-                        <td>${i.descripcion || '-'}${i.origenGrupo ? ' <span class="grupo-origen">(de grupo)</span>' : ''}</td>
-                        <td><span class="badge badge-success">${i.tipo}</span></td>
-                        <td class="text-success">${Calculations.formatearMoneda(i.monto)}</td>
-                        <td>
-                          <button class="btn btn-small btn-secondary" onclick="IngresosController.editar('${i.id}')">Editar</button>
-                          <button class="btn btn-small btn-danger" onclick="IngresosController.eliminar('${i.id}')">Eliminar</button>
-                        </td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-              </div>
-              <div class="mobile-list">
-                ${ingresos.map(i => `
-                  <div class="mobile-list-item" onclick="this.classList.toggle('expanded')">
-                    <div class="mobile-item-main">
-                      <div class="mobile-item-primary">
-                        <div style="font-size: 0.85rem; color: var(--text-secondary);">${new Date(i.fecha).toLocaleDateString('es-ES')}</div>
-                        <div style="margin: 4px 0;">
-                          <span class="badge badge-success">${i.tipo}</span>
-                        </div>
-                      </div>
-                      <div class="mobile-item-amount text-success">${Calculations.formatearMoneda(i.monto)}</div>
-                    </div>
-                    <div class="mobile-item-details">
-                      <div style="margin-bottom: var(--spacing-sm);">
-                        <strong>Descripción:</strong> ${i.descripcion || '-'}${i.origenGrupo ? ' <span class=\"grupo-origen\">(de grupo)</span>' : ''}
-                      </div>
-                      <div style="display: flex; gap: var(--spacing-sm);">
-                        <button class="btn btn-small btn-secondary" 
-                                onclick="event.stopPropagation(); IngresosController.editar('${i.id}')">Editar</button>
-                        <button class="btn btn-small btn-danger" 
-                                onclick="event.stopPropagation(); IngresosController.eliminar('${i.id}')">Eliminar</button>
-                      </div>
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-            `}
+            ` : this.renderIngresosPorMes(ingresosPorMes)}
           </div>
         </div>
       </div>
@@ -481,6 +438,119 @@ const IngresosController = {
       anual: '📅 Anual'
     };
     return textos[frecuencia] || frecuencia;
+  },
+  
+  // Agrupar ingresos por mes y año
+  agruparPorMes(ingresos) {
+    const grupos = {};
+    const hoy = new Date();
+    const mesActual = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}`;
+    
+    ingresos.forEach(ingreso => {
+      const fecha = new Date(ingreso.fecha);
+      const mesKey = `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, '0')}`;
+      
+      if (!grupos[mesKey]) {
+        grupos[mesKey] = {
+          key: mesKey,
+          nombre: fecha.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }),
+          ingresos: [],
+          total: 0,
+          esActual: mesKey === mesActual
+        };
+      }
+      
+      grupos[mesKey].ingresos.push(ingreso);
+      grupos[mesKey].total += ingreso.monto;
+    });
+    
+    return Object.values(grupos).sort((a, b) => b.key.localeCompare(a.key));
+  },
+  
+  // Renderizar ingresos agrupados por mes
+  renderIngresosPorMes(meses) {
+    return `
+      <div class="accordion-container">
+        ${meses.map((mes, index) => `
+          <div class="accordion-item ${mes.esActual ? 'is-open' : ''}" data-mes="${mes.key}">
+            <div class="accordion-header" onclick="IngresosController.toggleMes('${mes.key}')">
+              <div class="accordion-title">
+                <span class="accordion-icon">📅</span>
+                <span class="accordion-label">${mes.nombre}</span>
+                <span class="accordion-count">${mes.ingresos.length} ingreso${mes.ingresos.length !== 1 ? 's' : ''}</span>
+              </div>
+              <div class="accordion-meta">
+                <span class="accordion-total text-success">${Calculations.formatearMoneda(mes.total)}</span>
+                <span class="accordion-toggle">▼</span>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Descripción</th>
+                      <th>Tipo</th>
+                      <th>Monto</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${mes.ingresos.map(i => `
+                      <tr>
+                        <td>${new Date(i.fecha).toLocaleDateString('es-ES')}</td>
+                        <td>${i.descripcion || '-'}${i.origenGrupo ? ' <span class="grupo-origen">(de grupo)</span>' : ''}</td>
+                        <td><span class="badge badge-success">${i.tipo}</span></td>
+                        <td class="text-success">${Calculations.formatearMoneda(i.monto)}</td>
+                        <td>
+                          <button class="btn btn-small btn-secondary" onclick="IngresosController.editar('${i.id}')">Editar</button>
+                          <button class="btn btn-small btn-danger" onclick="IngresosController.eliminar('${i.id}')">Eliminar</button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+              <div class="mobile-list">
+                ${mes.ingresos.map(i => `
+                  <div class="mobile-list-item" onclick="this.classList.toggle('expanded')">
+                    <div class="mobile-item-main">
+                      <div class="mobile-item-primary">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">${new Date(i.fecha).toLocaleDateString('es-ES')}</div>
+                        <div style="margin: 4px 0;">
+                          <span class="badge badge-success">${i.tipo}</span>
+                        </div>
+                      </div>
+                      <div class="mobile-item-amount text-success">${Calculations.formatearMoneda(i.monto)}</div>
+                    </div>
+                    <div class="mobile-item-details">
+                      <div style="margin-bottom: var(--spacing-sm);">
+                        <strong>Descripción:</strong> ${i.descripcion || '-'}${i.origenGrupo ? ' <span class=\"grupo-origen\">(de grupo)</span>' : ''}
+                      </div>
+                      <div style="display: flex; gap: var(--spacing-sm);">
+                        <button class="btn btn-small btn-secondary" 
+                                onclick="event.stopPropagation(); IngresosController.editar('${i.id}')">Editar</button>
+                        <button class="btn btn-small btn-danger" 
+                                onclick="event.stopPropagation(); IngresosController.eliminar('${i.id}')">Eliminar</button>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  },
+  
+  // Toggle para expandir/colapsar mes
+  toggleMes(mesKey) {
+    const item = document.querySelector(`.accordion-item[data-mes="${mesKey}"]`);
+    if (item) {
+      item.classList.toggle('is-open');
+    }
   }
 };
 

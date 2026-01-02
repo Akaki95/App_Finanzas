@@ -10,32 +10,32 @@
 }
 
 [data-theme="dark"] {
-  /* Colores principales - Tonos grises */
-  --bg-primary: #1a1a1a;
-  --bg-secondary: #242424;
-  --bg-tertiary: #2d2d2d;
+  /* Colores principales - Inspirado en VS Code Dark+ y GitHub Dark */
+  --bg-primary: #1e1e1e;      /* Fondo principal - VS Code style */
+  --bg-secondary: #252526;    /* Cards y elementos elevados - ligeramente más claro */
+  --bg-tertiary: #2d2d30;     /* Inputs, hovers - sutil diferencia */
   
-  /* Textos */
-  --text-primary: #e5e5e5;
-  --text-secondary: #a3a3a3;
-  --text-tertiary: #737373;
+  /* Textos - Alta legibilidad con buen contraste */
+  --text-primary: #cccccc;    /* Texto principal - VS Code standard */
+  --text-secondary: #858585;  /* Texto secundario - bien visible */
+  --text-tertiary: #6e6e6e;   /* Texto terciario - presente pero discreto */
   
-  /* Bordes y separadores */
-  --border-color: #3a3a3a;
-  --border-hover: #4a4a4a;
+  /* Bordes y separadores - Sutiles pero definidos */
+  --border-color: #3e3e42;    /* Bordes principales */
+  --border-hover: #4e4e52;    /* Hover más distinguible */
   
-  /* Colores de acento (mantienen su esencia pero más suaves) */
-  --primary-color: #4ade80;
-  --secondary-color: #60a5fa;
-  --success-color: #4ade80;
-  --danger-color: #f87171;
-  --warning-color: #fbbf24;
-  --info-color: #60a5fa;
+  /* Colores de acento - Vibrantes y profesionales */
+  --primary-color: #4ade80;   /* Verde éxito - brillante y claro */
+  --secondary-color: #3b82f6; /* Azul profesional */
+  --success-color: #4ade80;   /* Verde consistente */
+  --danger-color: #ef4444;    /* Rojo alerta - fuerte pero no agresivo */
+  --warning-color: #f59e0b;   /* Naranja cálido */
+  --info-color: #3b82f6;      /* Azul informativo */
   
-  /* Sombras adaptadas */
-  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.6), 0 1px 2px 0 rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.6), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.6), 0 10px 10px -5px rgba(0, 0, 0, 0.4);
+  /* Sombras - Mínimas y sutiles como VS Code */
+  --shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+  --shadow-lg: 0 4px 8px 0 rgba(0, 0, 0, 0.25);
+  --shadow-xl: 0 8px 16px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* Ajustes específicos para dark mode */
@@ -44,6 +44,11 @@
 [data-theme="dark"] .chart-card {
   background: var(--bg-secondary);
   border: 1px solid var(--border-color);
+  box-shadow: var(--shadow);
+}
+
+[data-theme="dark"] .card:hover {
+  border-color: var(--border-hover);
 }
 
 [data-theme="dark"] .form-input,
@@ -325,7 +330,7 @@
 }
 
 [data-theme="dark"] .text-danger {
-  color: #f87171 !important;
+  color: #ef4444 !important;
 }
 
 [data-theme="dark"] .item-amount {
@@ -533,4 +538,287 @@
 
 [data-theme="dark"] .deuda-stat-value {
   color: var(--text-primary);
+}
+
+/* ========== NUEVOS ESTILOS DARK MODE ========== */
+
+/* Accordion (contenedores desplegables) */
+[data-theme="dark"] .accordion-item {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .accordion-item.is-open {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(74, 222, 128, 0.2);
+}
+
+[data-theme="dark"] .accordion-header {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .accordion-header:hover {
+  background: rgba(45, 45, 45, 0.8);
+}
+
+[data-theme="dark"] .accordion-label {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .accordion-count {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .accordion-toggle {
+  color: var(--text-secondary);
+}
+
+/* Grupos de Gastos/Ingresos - Tarjetas de Información */
+[data-theme="dark"] .grupo-info-card {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .grupo-info-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .info-card-icon {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .info-card-label {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .info-card-value {
+  color: var(--text-primary);
+}
+
+/* Tarjetas de estado específicas en dark mode */
+[data-theme="dark"] .info-estado-card.abierto {
+  border-color: rgba(74, 222, 128, 0.4);
+  background: rgba(74, 222, 128, 0.08);
+}
+
+[data-theme="dark"] .info-estado-card.abierto .info-card-value {
+  color: #4ade80;
+}
+
+[data-theme="dark"] .info-estado-card.cerrado {
+  border-color: rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.08);
+}
+
+[data-theme="dark"] .info-estado-card.cerrado .info-card-value {
+  color: #ef4444;
+}
+
+[data-theme="dark"] .info-total-card {
+  border-color: rgba(59, 130, 246, 0.4);
+  background: rgba(59, 130, 246, 0.08);
+}
+
+[data-theme="dark"] .info-total-card .info-card-value {
+  color: #3b82f6;
+}
+
+[data-theme="dark"] .info-count-card {
+  border-color: rgba(168, 85, 247, 0.4);
+  background: rgba(168, 85, 247, 0.08);
+}
+
+[data-theme="dark"] .info-count-card .info-card-value {
+  color: #a855f7;
+}
+
+/* Tablas personalizadas de grupos */
+[data-theme="dark"] .table-custom-thead {
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .table-custom-th {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .table-custom-row td {
+  border-bottom-color: var(--border-color);
+}
+
+[data-theme="dark"] .table-custom-row:hover {
+  background: var(--bg-tertiary);
+}
+
+/* Mobile list items para grupos */
+[data-theme="dark"] .mobile-list-item {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] .mobile-list-item.expanded {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .mobile-item-primary {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .mobile-item-amount {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .mobile-item-details {
+  color: var(--text-secondary);
+}
+
+/* Navegación en dark mode */
+[data-theme="dark"] .nav {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .nav.show {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .menu-toggle {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .menu-toggle:hover {
+  background: var(--bg-secondary);
+}
+
+/* Sync button en dark mode */
+[data-theme="dark"] .sync-btn {
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .sync-btn:hover {
+  background: var(--bg-secondary);
+  color: var(--primary-color);
+}
+
+[data-theme="dark"] .sync-btn.syncing {
+  color: var(--primary-color);
+}
+
+/* Items list mejorada */
+[data-theme="dark"] .items-list .item {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .items-list .item:hover {
+  border-color: var(--primary-color);
+}
+
+[data-theme="dark"] .item-title {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .item-subtitle {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .item-actions {
+  background: transparent;
+}
+
+[data-theme="dark"] .btn-icon-delete {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .btn-icon-delete:hover {
+  background: rgba(248, 113, 113, 0.1);
+  color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+/* Estados y badges adicionales */
+[data-theme="dark"] .estado {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+}
+
+[data-theme="dark"] .estado.abierto {
+  color: #4ade80;
+  background: rgba(74, 222, 128, 0.15);
+}
+
+[data-theme="dark"] .estado.cerrado {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+[data-theme="dark"] .categoria-label {
+  color: var(--text-primary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+/* Grupo origen badge */
+[data-theme="dark"] .grupo-origen {
+  color: var(--text-secondary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+}
+
+/* Card subtitle */
+[data-theme="dark"] .card-subtitle {
+  color: var(--text-secondary);
+  border-bottom-color: var(--border-color);
+}
+
+/* Botones disabled */
+[data-theme="dark"] .btn-disabled,
+[data-theme="dark"] .btn:disabled {
+  background: var(--bg-tertiary);
+  color: var(--text-tertiary);
+  border-color: var(--border-color);
+  opacity: 0.5;
+}
+
+/* Section header actions */
+[data-theme="dark"] .section-header-actions {
+  gap: var(--spacing-md);
+}
+
+/* Sombras suaves en dark mode */
+[data-theme="dark"] .card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+  border-color: var(--border-hover);
+}
+
+/* Chart containers */
+[data-theme="dark"] .charts-container {
+  gap: var(--spacing-lg);
+}
+
+[data-theme="dark"] .chart-canvas {
+  filter: brightness(1) contrast(1);
+}
+
+/* Date separator */
+[data-theme="dark"] .date-separator {
+  color: var(--text-secondary);
+}
+
+/* Badge success */
+[data-theme="dark"] .badge-success {
+  background: rgba(74, 222, 128, 0.15);
+  color: #4ade80;
+  border: 1px solid rgba(74, 222, 128, 0.3);
 }

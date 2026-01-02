@@ -4,11 +4,14 @@ const GastosController = {
   // Renderizar vista de gastos
   render() {
     const mainContent = document.getElementById('main-content');
-    const gastos = GastoModel.getAll().sort((a, b) => {
+    const gastosOrdenados = GastoModel.getAll().sort((a, b) => {
       const fechaDiff = new Date(b.fecha) - new Date(a.fecha);
       if (fechaDiff !== 0) return fechaDiff;
       return b.id.localeCompare(a.id); // Si misma fecha, el más reciente (ID mayor) primero
     });
+    
+    // Agrupar gastos por mes
+    const gastosPorMes = this.agruparPorMes(gastosOrdenados);
     const categorias = GastoModel.getCategorias();
     
     mainContent.innerHTML = `
@@ -47,73 +50,17 @@ const GastosController = {
           </div>
         </div>
         
-        <!-- Lista de gastos -->
+        <!-- Lista de gastos agrupada por mes -->
         <div class="card">
-          <div class="card-title">Listado de Gastos</div>
+          <div class="card-title">Listado de Gastos por Mes</div>
           <div class="table-container">
-            ${gastos.length === 0 ? `
+            ${gastosOrdenados.length === 0 ? `
               <div class="empty-state">
                 <div class="empty-state-icon">📝</div>
                 <div class="empty-state-title">No hay gastos registrados</div>
                 <div class="empty-state-text">Comienza agregando tu primer gasto</div>
               </div>
-            ` : `
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th>Fecha</th>
-                      <th>Descripción</th>
-                      <th>Categoría</th>
-                      <th>Monto</th>
-                      <th>Acciones</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    ${gastos.map(gasto => `
-                      <tr>
-                        <td>${new Date(gasto.fecha).toLocaleDateString('es-ES')}</td>
-                        <td>${gasto.descripcion || '-'}${gasto.origenGrupo ? ' <span class="grupo-origen">(de grupo)</span>' : ''}</td>
-                        <td><span class="category-chip category-${gasto.categoria.toLowerCase()}">${gasto.categoria}</span></td>
-                        <td class="text-danger">${Calculations.formatearMoneda(gasto.monto)}</td>
-                        <td>
-                          <button class="btn btn-small btn-secondary" 
-                                  onclick="GastosController.editar('${gasto.id}')">Editar</button>
-                          <button class="btn btn-small btn-danger" 
-                                  onclick="GastosController.eliminar('${gasto.id}')">Eliminar</button>
-                        </td>
-                      </tr>
-                    `).join('')}
-                  </tbody>
-                </table>
-              </div>
-              <div class="mobile-list">
-                ${gastos.map(gasto => `
-                  <div class="mobile-list-item" onclick="this.classList.toggle('expanded')">
-                    <div class="mobile-item-main">
-                      <div class="mobile-item-primary">
-                        <div style="font-size: 0.85rem; color: var(--text-secondary);">${new Date(gasto.fecha).toLocaleDateString('es-ES')}</div>
-                        <div style="margin: 4px 0;">
-                          <span class="category-chip category-${gasto.categoria.toLowerCase()}">${gasto.categoria}</span>
-                        </div>
-                      </div>
-                      <div class="mobile-item-amount text-danger">${Calculations.formatearMoneda(gasto.monto)}</div>
-                    </div>
-                    <div class="mobile-item-details">
-                      <div style="margin-bottom: var(--spacing-sm);">
-                        <strong>Descripción:</strong> ${gasto.descripcion || '-'}${gasto.origenGrupo ? ' <span class=\"grupo-origen\">(de grupo)</span>' : ''}
-                      </div>
-                      <div style="display: flex; gap: var(--spacing-sm);">
-                        <button class="btn btn-small btn-secondary" 
-                                onclick="event.stopPropagation(); GastosController.editar('${gasto.id}')">Editar</button>
-                        <button class="btn btn-small btn-danger" 
-                                onclick="event.stopPropagation(); GastosController.eliminar('${gasto.id}')">Eliminar</button>
-                      </div>
-                    </div>
-                  </div>
-                `).join('')}
-              </div>
-            `}
+            ` : this.renderGastosPorMes(gastosPorMes)}
           </div>
         </div>
       </div>
@@ -491,6 +438,121 @@ const GastosController = {
       anual: '📅 Anual'
     };
     return textos[frecuencia] || frecuencia;
+  },
+  
+  // Agrupar gastos por mes y año
+  agruparPorMes(gastos) {
+    const grupos = {};
+    const hoy = new Date();
+    const mesActual = `${hoy.getFullYear()}-${String(hoy.getMonth() + 1).padStart(2, '0')}`;
+    
+    gastos.forEach(gasto => {
+      const fecha = new Date(gasto.fecha);
+      const mesKey = `${fecha.getFullYear()}-${String(fecha.getMonth() + 1).padStart(2, '0')}`;
+      
+      if (!grupos[mesKey]) {
+        grupos[mesKey] = {
+          key: mesKey,
+          nombre: fecha.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' }),
+          gastos: [],
+          total: 0,
+          esActual: mesKey === mesActual
+        };
+      }
+      
+      grupos[mesKey].gastos.push(gasto);
+      grupos[mesKey].total += gasto.monto;
+    });
+    
+    return Object.values(grupos).sort((a, b) => b.key.localeCompare(a.key));
+  },
+  
+  // Renderizar gastos agrupados por mes
+  renderGastosPorMes(meses) {
+    return `
+      <div class="accordion-container">
+        ${meses.map((mes, index) => `
+          <div class="accordion-item ${mes.esActual ? 'is-open' : ''}" data-mes="${mes.key}">
+            <div class="accordion-header" onclick="GastosController.toggleMes('${mes.key}')">
+              <div class="accordion-title">
+                <span class="accordion-icon">📅</span>
+                <span class="accordion-label">${mes.nombre}</span>
+                <span class="accordion-count">${mes.gastos.length} gasto${mes.gastos.length !== 1 ? 's' : ''}</span>
+              </div>
+              <div class="accordion-meta">
+                <span class="accordion-total text-danger">${Calculations.formatearMoneda(mes.total)}</span>
+                <span class="accordion-toggle">▼</span>
+              </div>
+            </div>
+            <div class="accordion-content">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Fecha</th>
+                      <th>Descripción</th>
+                      <th>Categoría</th>
+                      <th>Monto</th>
+                      <th>Acciones</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${mes.gastos.map(gasto => `
+                      <tr>
+                        <td>${new Date(gasto.fecha).toLocaleDateString('es-ES')}</td>
+                        <td>${gasto.descripcion || '-'}${gasto.origenGrupo ? ' <span class="grupo-origen">(de grupo)</span>' : ''}</td>
+                        <td><span class="category-chip category-${gasto.categoria.toLowerCase()}">${gasto.categoria}</span></td>
+                        <td class="text-danger">${Calculations.formatearMoneda(gasto.monto)}</td>
+                        <td>
+                          <button class="btn btn-small btn-secondary" 
+                                  onclick="GastosController.editar('${gasto.id}')">Editar</button>
+                          <button class="btn btn-small btn-danger" 
+                                  onclick="GastosController.eliminar('${gasto.id}')">Eliminar</button>
+                        </td>
+                      </tr>
+                    `).join('')}
+                  </tbody>
+                </table>
+              </div>
+              <div class="mobile-list">
+                ${mes.gastos.map(gasto => `
+                  <div class="mobile-list-item" onclick="this.classList.toggle('expanded')">
+                    <div class="mobile-item-main">
+                      <div class="mobile-item-primary">
+                        <div style="font-size: 0.85rem; color: var(--text-secondary);">${new Date(gasto.fecha).toLocaleDateString('es-ES')}</div>
+                        <div style="margin: 4px 0;">
+                          <span class="category-chip category-${gasto.categoria.toLowerCase()}">${gasto.categoria}</span>
+                        </div>
+                      </div>
+                      <div class="mobile-item-amount text-danger">${Calculations.formatearMoneda(gasto.monto)}</div>
+                    </div>
+                    <div class="mobile-item-details">
+                      <div style="margin-bottom: var(--spacing-sm);">
+                        <strong>Descripción:</strong> ${gasto.descripcion || '-'}${gasto.origenGrupo ? ' <span class=\"grupo-origen\">(de grupo)</span>' : ''}
+                      </div>
+                      <div style="display: flex; gap: var(--spacing-sm);">
+                        <button class="btn btn-small btn-secondary" 
+                                onclick="event.stopPropagation(); GastosController.editar('${gasto.id}')">Editar</button>
+                        <button class="btn btn-small btn-danger" 
+                                onclick="event.stopPropagation(); GastosController.eliminar('${gasto.id}')">Eliminar</button>
+                      </div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  },
+  
+  // Toggle para expandir/colapsar mes
+  toggleMes(mesKey) {
+    const item = document.querySelector(`.accordion-item[data-mes="${mesKey}"]`);
+    if (item) {
+      item.classList.toggle('is-open');
+    }
   }
 };
 

@@ -89,13 +89,43 @@ const GrupoGastoView = {
           ${grupo.estado === 'abierto' ? `<button class="btn btn-primary" onclick="GrupoGastoView.mostrarModalMovimiento('${grupo.id}')">➕ Añadir Gasto</button>` : ''}
         </div>
       </div>
+      <!-- Información del Grupo -->
+      <div class="grupo-info-cards">
+        <div class="grupo-info-card info-descripcion-card">
+          <div class="info-card-icon">📝</div>
+          <div class="info-card-content">
+            <div class="info-card-label">Descripción</div>
+            <div class="info-card-value">${grupo.descripcion || 'Sin descripción'}</div>
+          </div>
+        </div>
+        
+        <div class="grupo-info-card info-estado-card ${grupo.estado === 'cerrado' ? 'cerrado' : 'abierto'}">
+          <div class="info-card-icon">${grupo.estado === 'cerrado' ? '🔒' : '🔓'}</div>
+          <div class="info-card-content">
+            <div class="info-card-label">Estado</div>
+            <div class="info-card-value">${grupo.estado === 'abierto' ? 'Abierto' : 'Cerrado'}</div>
+          </div>
+        </div>
+        
+        <div class="grupo-info-card info-total-card">
+          <div class="info-card-icon">💰</div>
+          <div class="info-card-content">
+            <div class="info-card-label">Total Acumulado</div>
+            <div class="info-card-value">${Calculations.formatearMoneda(grupo.total)}</div>
+          </div>
+        </div>
+        
+        <div class="grupo-info-card info-count-card">
+          <div class="info-card-icon">📊</div>
+          <div class="info-card-content">
+            <div class="info-card-label">Movimientos</div>
+            <div class="info-card-value">${grupo.movimientos.length}</div>
+          </div>
+        </div>
+      </div>
+      
       <div class="card">
         <div class="card-title">Movimientos del Grupo</div>
-        <div class="card-info-row">
-          <div class="info-descripcion">${grupo.descripcion || 'Sin descripción'}</div>
-          <div class="info-estado${grupo.estado === 'cerrado' ? ' cerrado' : ''}">${grupo.estado}</div>
-          <div class="info-total"><b>Total:</b> ${grupo.total.toFixed(2)} €</div>
-        </div>
         <div class="table-container">
           ${grupo.movimientos.length === 0 ? `
             <div class="empty-state">
