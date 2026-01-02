@@ -80,12 +80,13 @@ const IngresoModel = {
     
     CacheService.set(this.collectionName, ingresos);
     
-    // Agregar a cola de sincronización
+    // Agregar a cola de sincronización (excluir _id)
+    const { _id, ...updateData } = ingresos[index];
     SyncService.addToQueue({
       collection: this.collectionName,
       action: 'update',
       id: id,
-      data: ingresos[index]
+      data: updateData
     });
     
     Logger.success('Ingreso actualizado', ingresos[index]);

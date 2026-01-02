@@ -129,12 +129,13 @@ const PrestamoModel = {
     
     CacheService.set(this.collectionName, prestamos);
     
-    // Agregar a cola de sincronización
+    // Agregar a cola de sincronización (excluir _id)
+    const { _id, ...updateData } = prestamos[index];
     SyncService.addToQueue({
       collection: this.collectionName,
       action: 'update',
       id: id,
-      data: prestamos[index]
+      data: updateData
     });
     
     Logger.success('Préstamo actualizado', prestamos[index]);

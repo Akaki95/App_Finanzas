@@ -185,12 +185,13 @@ const PatrimonioModel = {
     
     CacheService.set(this.activosCollection, activos);
     
-    // Agregar a cola de sincronización
+    // Agregar a cola de sincronización (excluir _id)
+    const { _id, ...updateData } = activos[index];
     SyncService.addToQueue({
       collection: this.activosCollection,
       action: 'update',
       id: id,
-      data: activos[index]
+      data: updateData
     });
     
     Logger.success('Activo actualizado', activos[index]);
@@ -341,12 +342,13 @@ const PatrimonioModel = {
     
     CacheService.set(this.pasivosCollection, pasivos);
     
-    // Agregar a cola de sincronización
+    // Agregar a cola de sincronización (excluir _id)
+    const { _id, ...updateData } = pasivos[index];
     SyncService.addToQueue({
       collection: this.pasivosCollection,
       action: 'update',
       id: id,
-      data: pasivos[index]
+      data: updateData
     });
     
     Logger.success('Pasivo actualizado', pasivos[index]);

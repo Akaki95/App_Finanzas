@@ -70,12 +70,13 @@ const CashflowModel = {
     
     CacheService.set(this.ingresosCollection, ingresos);
     
-    // Sincronizar con backend
+    // Sincronizar con backend (excluir _id)
+    const { _id: _idIngreso, ...updateDataIngreso } = ingresos[index];
     SyncService.addToQueue({
       collection: this.ingresosCollection,
       action: 'update',
       id: id,
-      data: ingresos[index]
+      data: updateDataIngreso
     });
     
     Logger.success('Ingreso pasivo actualizado', ingresos[index]);
@@ -172,12 +173,13 @@ const CashflowModel = {
     
     CacheService.set(this.gastosCollection, gastos);
     
-    // Sincronizar con backend
+    // Sincronizar con backend (excluir _id)
+    const { _id: _idGasto, ...updateDataGasto } = gastos[index];
     SyncService.addToQueue({
       collection: this.gastosCollection,
       action: 'update',
       id: id,
-      data: gastos[index]
+      data: updateDataGasto
     });
     
     Logger.success('Gasto recurrente actualizado', gastos[index]);

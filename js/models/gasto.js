@@ -80,12 +80,13 @@ const GastoModel = {
     
     CacheService.set(this.collectionName, gastos);
     
-    // Agregar a cola de sincronización
+    // Agregar a cola de sincronización (excluir _id)
+    const { _id, ...updateData } = gastos[index];
     SyncService.addToQueue({
       collection: this.collectionName,
       action: 'update',
       id: id,
-      data: gastos[index]
+      data: updateData
     });
     
     Logger.success('Gasto actualizado', gastos[index]);

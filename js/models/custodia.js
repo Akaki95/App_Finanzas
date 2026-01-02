@@ -166,12 +166,13 @@ const CustodiaModel = {
     custodias[index] = custodiaActualizada;
     CacheService.set(this.collectionName, custodias);
     
-    // Agregar a cola de sincronización
+    // Agregar a cola de sincronización (excluir _id)
+    const { _id, ...updateData } = custodiaActualizada;
     SyncService.addToQueue({
       collection: this.collectionName,
       action: 'update',
       id: id,
-      data: custodiaActualizada
+      data: updateData
     });
     
     Logger.success('Movimiento de custodia actualizado', custodiaActualizada);

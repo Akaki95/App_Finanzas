@@ -22,9 +22,10 @@
     grupo.movimientos[idx] = { ...grupo.movimientos[idx], ...nuevoMovimiento };
     grupo.total += nuevoMovimiento.monto;
     CacheService.set(this.collectionName, grupos);
-    // Usar _id si existe para sincronizar con backend
+    // Usar _id si existe para sincronizar con backend (excluir _id del data)
     const syncId = grupo && grupo._id ? grupo._id : grupoId;
-    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: grupo });
+    const { _id, ...updateData } = grupo;
+    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: updateData });
     return grupo;
   },
 
@@ -37,9 +38,10 @@
     grupo.total -= grupo.movimientos[idx].monto;
     grupo.movimientos.splice(idx, 1);
     CacheService.set(this.collectionName, grupos);
-    // Usar _id si existe para sincronizar con backend
+    // Usar _id si existe para sincronizar con backend (excluir _id del data)
     const syncId = grupo && grupo._id ? grupo._id : grupoId;
-    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: grupo });
+    const { _id, ...updateData } = grupo;
+    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: updateData });
     return grupo;
   },
   collectionName: 'grupo_ingresos',
@@ -97,9 +99,10 @@
     grupo.estado = 'cerrado';
     grupo.fechaCierre = new Date().toISOString();
     CacheService.set(this.collectionName, grupos);
-    // Usar _id si existe para sincronizar con backend
+    // Usar _id si existe para sincronizar con backend (excluir _id del data)
     const syncId = grupo && grupo._id ? grupo._id : grupoId;
-    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: grupo });
+    const { _id, ...updateData } = grupo;
+    SyncService.addToQueue({ collection: this.collectionName, action: 'update', id: syncId, data: updateData });
     // Crear ingreso resumen en IngresoModel
     IngresoModel.create({
       fecha: grupo.fechaCierre,

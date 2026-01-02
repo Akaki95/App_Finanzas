@@ -97,12 +97,13 @@ const DeudaModel = {
     
     CacheService.set(this.collectionName, deudas);
     
-    // Agregar a cola de sincronización
+    // Agregar a cola de sincronización (excluir _id)
+    const { _id, ...updateData } = deudas[index];
     SyncService.addToQueue({
       collection: this.collectionName,
       action: 'update',
       id: id,
-      data: deudas[index]
+      data: updateData
     });
     
     Logger.success('Deuda actualizada', deudas[index]);
