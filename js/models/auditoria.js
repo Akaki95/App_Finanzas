@@ -89,19 +89,19 @@ const AuditoriaModel = {
     return auditorias.find(a => a.id === id);
   },
   
-  // Calcular balance del mes actual
+  // Calcular balance acumulado total (todos los meses)
   getBalanceMesActual() {
-    const hoy = new Date();
-    const mes = hoy.getMonth() + 1;
-    const anio = hoy.getFullYear();
-    
     const ingresos = IngresoModel.getAll();
     const gastos = GastoModel.getAll();
     
-    const balance = Calculations.calcularBalanceMensual(ingresos, gastos, mes, anio);
+    // Calcular suma total de todos los ingresos
+    const totalIngresos = ingresos.reduce((sum, ingreso) => sum + (ingreso.monto || 0), 0);
     
-    // Balance acumulado = ingresos - gastos
-    return balance.balance;
+    // Calcular suma total de todos los gastos
+    const totalGastos = gastos.reduce((sum, gasto) => sum + (gasto.monto || 0), 0);
+    
+    // Balance acumulado = total ingresos - total gastos
+    return totalIngresos - totalGastos;
   },
   
   // Obtener total en custodia (dinero de terceros)

@@ -25,9 +25,9 @@ const AuditoriaController = {
         <div class="info-banner">
           <div class="info-banner-icon">ℹ️</div>
           <div class="info-banner-text">
-            Crea tiquets para verificar que tus cuentas cuadren con tu balance del mes actual.
+            Crea tiquets para verificar que tus cuentas cuadren con tu balance acumulado total.
             <ul>
-              <li><strong>Balance del mes:</strong> ${Calculations.formatearMoneda(balanceMes)}</li>
+              <li><strong>Balance acumulado:</strong> ${Calculations.formatearMoneda(balanceMes)}</li>
               <li><strong>Objetivo:</strong> El total de tus cuentas debe coincidir con este balance</li>
             </ul>
           </div>
@@ -36,7 +36,7 @@ const AuditoriaController = {
         <!-- Estadísticas -->
         <div class="summary-cards">
           <div class="summary-card balance">
-            <div class="summary-card-label">Balance del Mes</div>
+            <div class="summary-card-label">Balance Acumulado</div>
             <div class="summary-card-value">${Calculations.formatearMoneda(balanceMes)}</div>
           </div>
           <div class="summary-card ingresos">
