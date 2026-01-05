@@ -13,8 +13,7 @@ const AuthService = {
     try {
       const apiBase = window.APP_ENV?.API_BASE?.replace('/api', '') || 'http://localhost:3000';
       const response = await fetch(`${apiBase}/api/auth/status`, {
-        mode: 'cors',
-        credentials: 'include'
+        mode: 'cors'
       });
       
       if (!response.ok) {

@@ -38,7 +38,6 @@ const ConnectionService = {
       const response = await fetch(`${apiBase}/api/health`, {
         method: 'GET',
         mode: 'cors',
-        credentials: 'include',
         signal: controller.signal,
         headers: {
           'Content-Type': 'application/json'
