@@ -42,9 +42,8 @@ const AuthService = {
       return true;
     } catch (error) {
       console.error('Error al verificar estado de autenticación:', error);
-      // Si hay error de red, mostrar pantalla de registro por defecto
-      // El usuario podrá autenticarse cuando el backend vuelva
-      this.showRegister();
+      // Si hay error de red, no mostrar pantalla (la pantalla de conexión ya está visible)
+      // Solo retornar false para que app.js detenga la inicialización
       return false;
     }
   },
