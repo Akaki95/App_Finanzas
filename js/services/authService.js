@@ -12,7 +12,15 @@ const AuthService = {
   async checkAuthStatus() {
     try {
       const apiBase = window.APP_ENV?.API_BASE?.replace('/api', '') || 'http://localhost:3000';
-      const response = await fetch(`${apiBase}/api/auth/status`);
+      const response = await fetch(`${apiBase}/api/auth/status`, {
+        mode: 'cors',
+        credentials: 'include'
+      });
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      
       const data = await response.json();
 
       if (!data.configured) {
@@ -25,7 +33,7 @@ const AuthService = {
       const token = localStorage.getItem('auth_token');
       if (!token) {
         // No hay token, mostrar login
-        this.showLogin(data.email);
+        this.showLogin();
         return false;
       }
 
@@ -34,6 +42,9 @@ const AuthService = {
       return true;
     } catch (error) {
       console.error('Error al verificar estado de autenticación:', error);
+      // Si hay error de red, mostrar pantalla de registro por defecto
+      // El usuario podrá autenticarse cuando el backend vuelva
+      this.showRegister();
       return false;
     }
   },

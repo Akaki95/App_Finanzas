@@ -37,6 +37,8 @@ const ConnectionService = {
       const apiBase = window.APP_ENV?.API_BASE?.replace('/api', '') || 'http://localhost:3000';
       const response = await fetch(`${apiBase}/api/health`, {
         method: 'GET',
+        mode: 'cors',
+        credentials: 'include',
         signal: controller.signal,
         headers: {
           'Content-Type': 'application/json'

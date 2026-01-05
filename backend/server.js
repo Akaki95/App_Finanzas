@@ -8,7 +8,30 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middlewares
-app.use(cors()); // Permitir peticiones desde el frontend
+// Configuración mejorada de CORS para producción
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Permitir peticiones sin origin (como Postman, apps móviles, etc.)
+    if (!origin) return callback(null, true);
+    
+    // Lista de orígenes permitidos
+    const allowedOrigins = [
+      'http://localhost:5500',
+      'http://127.0.0.1:5500',
+      'https://finanzas-akaki-alondra.onrender.com'
+    ];
+    
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true,
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions)); // Permitir peticiones desde el frontend
 app.use(express.json()); // Parsear JSON en el body
 
 // Importar rutas
