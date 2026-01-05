@@ -6,6 +6,31 @@
   async function init() {
     Logger.log('Iniciando aplicación de Finanzas Personales...');
     
+    // 1. Inicializar servicio de autenticación
+    AuthService.init();
+    
+    // 2. Verificar autenticación
+    const isAuthenticated = await AuthService.checkAuthStatus();
+    
+    if (!isAuthenticated) {
+      Logger.log('Usuario no autenticado. Esperando autenticación...');
+      return; // Detener hasta que el usuario se autentique
+    }
+    
+    Logger.log('Usuario autenticado correctamente');
+    
+    // 3. Inicializar servicio de conexión
+    ConnectionService.init();
+    
+    // 4. Esperar a que la conexión esté establecida
+    const isConnected = await ConnectionService.checkConnection();
+    
+    if (!isConnected) {
+      Logger.error('No se pudo establecer conexión con el backend');
+      return; // Detener la inicialización hasta que haya conexión
+    }
+    
+    // 5. Continuar con la inicialización normal
     // Inicializar tema
     ConfigController.initTheme();
 

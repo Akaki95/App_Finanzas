@@ -12,6 +12,7 @@ app.use(cors()); // Permitir peticiones desde el frontend
 app.use(express.json()); // Parsear JSON en el body
 
 // Importar rutas
+const authRoutes = require('./routes/auth');
 const gastosRoutes = require('./routes/gastos');
 const ingresosRoutes = require('./routes/ingresos');
 const gastosAutomaticosRoutes = require('./routes/gastos_automaticos');
@@ -30,6 +31,7 @@ const grupoGastosRoutes = require('./routes/grupo_gastos');
 const grupoIngresosRoutes = require('./routes/grupo_ingresos');
 
 // Usar rutas
+app.use('/api/auth', authRoutes);
 app.use('/api/gastos', gastosRoutes);
 app.use('/api/ingresos', ingresosRoutes);
 app.use('/api/gastos_automaticos', gastosAutomaticosRoutes);
@@ -46,6 +48,11 @@ app.use('/api/cashflow_ingresos', cashflowIngresosRoutes);
 app.use('/api/cashflow_gastos', cashflowGastosRoutes);
 app.use('/api/grupo_gastos', grupoGastosRoutes);
 app.use('/api/grupo_ingresos', grupoIngresosRoutes);
+
+// Ruta de health check para verificar conexión
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // Ruta de prueba
 app.get('/', (req, res) => {
