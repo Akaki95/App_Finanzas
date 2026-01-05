@@ -18,9 +18,10 @@ const DashboardView = {
     // Gastos por Categoría: primer día del mes en curso
     const categoriasInicio = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
     const categoriasFin = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
-    // Ingresos vs Gastos: últimos 3 meses
-    const comparacionInicio = new Date(hoy.getFullYear(), hoy.getMonth() - 2, 1);
-    const comparacionFin = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+    // Ingresos por Tipo (%): mes actual por defecto
+    const comparacionInicio = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
+    // Último día del mes actual
+    const comparacionFin = new Date(hoy.getFullYear(), hoy.getMonth() + 1, 0);
     // Gastos por Categoría: primer día del mes actual hasta hoy
     const patrimonioInicio = new Date(hoy.getFullYear(), hoy.getMonth(), 1);
     const patrimonioFin = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
@@ -57,6 +58,11 @@ const DashboardView = {
     const ingresos = IngresoModel.getAll();
     const mesActual = Calculations.obtenerMesActual();
     const balance = Calculations.calcularBalanceMensual(ingresos, gastos, mesActual.mes, mesActual.anio);
+    const disponible = {
+      ingresos: Calculations.sumarMontos(ingresos),
+      gastos: Calculations.sumarMontos(gastos),
+      disponible: Calculations.sumarMontos(ingresos) - Calculations.sumarMontos(gastos)
+    };
     const patrimonio = PatrimonioModel.getResumen();
     const ahorrosStats = AhorroModel.getEstadisticas();
     
@@ -100,10 +106,10 @@ const DashboardView = {
           
           <div class="summary-card balance">
             <div class="summary-card-icon">📊</div>
-            <div class="summary-card-label">Balance del Mes</div>
-            <div class="summary-card-value">${Calculations.formatearMoneda(balance.balance)}</div>
+            <div class="summary-card-label">Disponible</div>
+            <div class="summary-card-value">${Calculations.formatearMoneda(disponible.disponible)}</div>
             <div class="summary-card-change">
-              ${balance.balance >= 0 ? '✅ Positivo' : '⚠️ Negativo'}
+              ${disponible.disponible >= 0 ? '✅ Positivo' : '⚠️ Negativo'}
             </div>
           </div>
           
@@ -296,45 +302,64 @@ const DashboardView = {
     }
     
     this.charts.cashflow = new Chart(ctx, {
-      type: 'line',
+      type: 'bar',
       data: {
         labels: cashflow.map(c => c.mes),
         datasets: [
           {
-            label: 'Ingresos',
+            label: 'Ingresos del Mes',
             data: cashflow.map(c => c.ingresos),
+            backgroundColor: 'rgba(76, 175, 80, 0.7)',
             borderColor: '#4CAF50',
-            backgroundColor: 'rgba(76, 175, 80, 0.1)',
-            tension: 0.4
+            borderWidth: 1,
+            yAxisID: 'y1',
+            order: 2
           },
           {
-            label: 'Gastos',
+            label: 'Gastos del Mes',
             data: cashflow.map(c => c.gastos),
+            backgroundColor: 'rgba(244, 67, 54, 0.7)',
             borderColor: '#f44336',
-            backgroundColor: 'rgba(244, 67, 54, 0.1)',
-            tension: 0.4
-          },
-          {
-            label: 'Balance',
-            data: cashflow.map(c => c.balance),
-            borderColor: '#2196F3',
-            backgroundColor: 'rgba(33, 150, 243, 0.1)',
-            tension: 0.4
+            borderWidth: 1,
+            yAxisID: 'y1',
+            order: 2
           }
         ]
       },
       options: {
         responsive: true,
         maintainAspectRatio: false,
+        interaction: {
+          mode: 'index',
+          intersect: false
+        },
         plugins: {
           legend: {
             display: true,
             position: 'top'
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                let label = context.dataset.label || '';
+                if (label) {
+                  label += ': ';
+                }
+                label += Calculations.formatearMoneda(context.parsed.y);
+                return label;
+              }
+            }
           }
         },
         scales: {
-          y: {
-            beginAtZero: true
+          y1: {
+            type: 'linear',
+            display: true,
+            position: 'left',
+            title: {
+              display: true,
+              text: 'Ingresos/Gastos del Mes'
+            }
           }
         }
       }
@@ -381,6 +406,18 @@ const DashboardView = {
         plugins: {
           legend: {
             position: 'right'
+          },
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const label = context.label || '';
+                const value = context.parsed;
+                const data = context.chart.data.datasets[0].data;
+                const total = data.reduce((a, b) => a + b, 0);
+                const porcentaje = total > 0 ? ((value / total) * 100).toFixed(1) : 0;
+                return `${label}: ${Calculations.formatearMoneda(value)} (${porcentaje}%)`;
+              }
+            }
           }
         }
       }

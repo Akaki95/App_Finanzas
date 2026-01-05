@@ -39,11 +39,16 @@ const Calculations = {
     return resultado;
   },
   
-  // Calcular cashflow por rango de fechas
+  // Calcular cashflow por rango de fechas con saldo acumulado
   calcularCashflowRango(ingresos, gastos, fechaInicio, fechaFin) {
     const inicio = new Date(fechaInicio);
     const fin = new Date(fechaFin);
     const resultado = [];
+    
+    // Calcular saldo inicial (todos los movimientos anteriores a la fecha de inicio)
+    const ingresosAnteriores = ingresos.filter(i => new Date(i.fecha) < inicio);
+    const gastosAnteriores = gastos.filter(g => new Date(g.fecha) < inicio);
+    let saldoAcumulado = this.sumarMontos(ingresosAnteriores) - this.sumarMontos(gastosAnteriores);
     
     // Iterar mes por mes desde inicio hasta fin
     const fechaActual = new Date(inicio.getFullYear(), inicio.getMonth(), 1);
@@ -54,12 +59,14 @@ const Calculations = {
       const anio = fechaActual.getFullYear();
       
       const balance = this.calcularBalanceMensual(ingresos, gastos, mes, anio);
+      saldoAcumulado += balance.balance;
       
       resultado.push({
         mes: fechaActual.toLocaleDateString('es-ES', { month: 'short', year: 'numeric' }),
         ingresos: balance.ingresos,
         gastos: balance.gastos,
-        balance: balance.balance
+        balance: balance.balance,
+        saldoAcumulado: saldoAcumulado
       });
       
       fechaActual.setMonth(fechaActual.getMonth() + 1);
