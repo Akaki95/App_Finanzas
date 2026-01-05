@@ -5,6 +5,8 @@ const ConnectionService = {
   maxRetryAttempts: 3,
   retryDelay: 10000, // 10 segundos entre reintentos automáticos
   connectionTimeout: 5000, // 5 segundos de timeout
+  minLoadingTime: 2000, // Tiempo mínimo que se muestra la pantalla de carga (2 segundos)
+  loadingStartTime: null, // Timestamp de cuando empezó a cargar
 
   // Elementos del DOM
   screen: null,
@@ -65,6 +67,9 @@ const ConnectionService = {
   showConnecting() {
     if (!this.screen) return;
     
+    // Guardar timestamp de inicio de carga
+    this.loadingStartTime = Date.now();
+    
     this.screen.classList.remove('hidden', 'error', 'retrying');
     this.screen.classList.add('connecting');
     
@@ -86,19 +91,26 @@ const ConnectionService = {
     console.log('✅ Conexión exitosa con el backend');
     this.retryAttempts = 0;
 
-    // Ocultar pantalla de conexión
-    if (this.screen) {
-      this.screen.classList.add('hidden');
-    }
+    // Calcular tiempo transcurrido desde que empezó a cargar
+    const elapsedTime = Date.now() - this.loadingStartTime;
+    const remainingTime = Math.max(0, this.minLoadingTime - elapsedTime);
 
-    // Detener reintentos automáticos si existen
-    if (this.checkInterval) {
-      clearInterval(this.checkInterval);
-      this.checkInterval = null;
-    }
+    // Esperar el tiempo restante para alcanzar el mínimo de carga
+    setTimeout(() => {
+      // Ocultar pantalla de conexión
+      if (this.screen) {
+        this.screen.classList.add('hidden');
+      }
 
-    // Iniciar monitoreo periódico (cada 30 segundos)
-    this.startPeriodicCheck();
+      // Detener reintentos automáticos si existen
+      if (this.checkInterval) {
+        clearInterval(this.checkInterval);
+        this.checkInterval = null;
+      }
+
+      // Iniciar monitoreo periódico (cada 30 segundos)
+      this.startPeriodicCheck();
+    }, remainingTime);
   },
 
   onConnectionError(error) {
