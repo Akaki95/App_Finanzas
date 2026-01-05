@@ -206,16 +206,16 @@ const AuthService = {
 
     if (isLocalhost) {
       document.getElementById('localhost-reset-link').addEventListener('click', () => {
-        this.showLocalhostReset(email);
+        this.showLocalhostReset();
       });
     }
 
     document.getElementById('back-to-login').addEventListener('click', () => {
-      this.showLogin(email);
+      this.showLogin();
     });
   },
 
-  showRecoveryCode(code, email) {
+  showRecoveryCode(codes) {
     this.currentView = 'recovery-code';
     this.content.innerHTML = `
       <div class="auth-icon">�</div>
@@ -223,7 +223,7 @@ const AuthService = {
       <p class="auth-subtitle">Guarda estos códigos en un lugar seguro. Los necesitarás para recuperar tu contraseña.</p>
       
       <div class="auth-backup-codes-container" id="backup-codes-container">
-        ${code.map(c => `<div class="auth-backup-code-item">${c}</div>`).join('')}
+        ${codes.map(c => `<div class="auth-backup-code-item">${c}</div>`).join('')}
       </div>
       
       <div class="auth-info" style="margin: 1rem 0;">
@@ -242,16 +242,17 @@ const AuthService = {
     this.screen.classList.remove('hidden');
 
     document.getElementById('download-codes-btn').addEventListener('click', () => {
-      this.downloadBackupCodes(code);
+      this.downloadBackupCodes(codes);
     });
 
     document.getElementById('confirm-saved-btn').addEventListener('click', () => {
       // Login automático después de confirmar
       this.hideAuth();
+      window.location.reload();
     });
   },
 
-  showLocalhostReset(email) {
+  showLocalhostReset() {
     this.currentView = 'localhost-reset';
     this.content.innerHTML = `
       <div class="auth-icon">🔓</div>
@@ -301,7 +302,7 @@ const AuthService = {
     });
 
     document.getElementById('back-to-recovery').addEventListener('click', () => {
-      this.showRecovery(email);
+      this.showRecovery();
     });
   },
 
@@ -414,8 +415,10 @@ No compartas estos códigos con nadie.
         throw new Error(data.error || 'Error al restablecer contraseña');
       }
 
-      // Mostrar nuevos códigos de respaldo
-      this.showRecoveryCode(data.backupCodes);
+      // Contraseña actualizada, mostrar mensaje y recargar
+      alert(`Contraseña actualizada correctamente. Códigos restantes: ${data.remainingCodes}/10`);
+      localStorage.removeItem('auth_token'); // Limpiar token anterior
+      this.showLogin(); // Volver a login
     } catch (error) {
       errorDiv.textContent = error.message;
       errorDiv.classList.add('show');
@@ -553,7 +556,7 @@ No compartas estos códigos con nadie.
       }
 
       // Mostrar código (en desarrollo)
-      this.showRecoveryCode(data.recoveryCode, data.email);
+      this.showRecoveryCode(data.recoveryCode);
     } catch (error) {
       errorDiv.textContent = error.message;
       errorDiv.classList.add('show');

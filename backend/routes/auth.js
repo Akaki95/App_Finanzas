@@ -203,16 +203,17 @@ router.post('/reset-password-backup', async (req, res) => {
     const saltRounds = 10;
     const passwordHash = await bcrypt.hash(newPassword, saltRounds);
 
-    // Generar nuevos códigos de respaldo
-    const newBackupCodes = generateBackupCodes(10);
+    // Actualizar solo la contraseña (sin regenerar códigos)
+    await req.authModel.updatePassword(passwordHash, false);
 
-    // Actualizar contraseña y códigos
-    await req.authModel.updatePassword(passwordHash, true, newBackupCodes);
+    // Obtener códigos restantes
+    const authConfig = await req.authModel.getAuthConfig();
+    const remainingCodes = authConfig.backupCodes.filter(c => !c.used).length;
 
     res.json({
       success: true,
       message: 'Contraseña actualizada correctamente',
-      backupCodes: newBackupCodes.map(c => c.code)
+      remainingCodes
     });
   } catch (error) {
     res.status(500).json({ error: error.message });
