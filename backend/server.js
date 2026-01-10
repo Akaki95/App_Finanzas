@@ -20,7 +20,8 @@ const corsOptions = {
       'http://127.0.0.1:5500',
       'http://localhost:8888',
       'http://127.0.0.1:8888',
-      'https://finanzas-akaki-alondra.onrender.com'
+      'https://finanzas-akaki-alondra.onrender.com',
+      'https://finanzas-renato-karina-qhn3.onrender.com'
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1) {
