@@ -37,12 +37,12 @@ const ConfigModel = {
       campos: [
         { id: 'fecha', nombre: 'Fecha', tipo: 'date', obligatorio: true, sistema: true, orden: 1 },
         { id: 'monto', nombre: 'Monto (€)', tipo: 'number', obligatorio: true, sistema: true, orden: 2, step: '0.01', min: '0.01' },
-        { 
-          id: 'categoria', 
-          nombre: 'Categoría', 
-          tipo: 'select', 
-          obligatorio: true, 
-          sistema: false, 
+        {
+          id: 'categoria',
+          nombre: 'Categoría',
+          tipo: 'select',
+          obligatorio: true,
+          sistema: false,
           orden: 3,
           opciones: [
             { valor: 'Comida', etiqueta: '🍽️ Comida', icono: '🍽️' },
@@ -64,12 +64,12 @@ const ConfigModel = {
       campos: [
         { id: 'fecha', nombre: 'Fecha', tipo: 'date', obligatorio: true, sistema: true, orden: 1 },
         { id: 'monto', nombre: 'Monto (€)', tipo: 'number', obligatorio: true, sistema: true, orden: 2, step: '0.01', min: '0.01' },
-        { 
-          id: 'tipo', 
-          nombre: 'Tipo', 
-          tipo: 'select', 
-          obligatorio: true, 
-          sistema: false, 
+        {
+          id: 'tipo',
+          nombre: 'Tipo',
+          tipo: 'select',
+          obligatorio: true,
+          sistema: false,
           orden: 3,
           opciones: [
             { valor: 'Salario', etiqueta: '💼 Salario', icono: '💼' },
@@ -147,25 +147,70 @@ const ConfigModel = {
 
   // Biblioteca de iconos disponibles
   ICONOS: {
-    finanzas: ['💰', '💵', '💴', '💶', '💷', '💳', '💸', '🏦', '📊', '📈', '📉', '💹', '🪙', '🥇', '🥈', '🥉', '💎', '💍', '👑', '📿', '🔮', '💠'],
-    comida: ['🍽️', '🍕', '🍔', '🍟', '🌮', '🌯', '🥗', '🍱', '🍜', '🍝', '🍞', '🥐', '🍰', '☕', '🍺'],
-    transporte: ['🚗', '🚕', '🚙', '🚌', '🚎', '🏎️', '🚓', '🚑', '🚒', '🚐', '🚚', '🚛', '🚜', '🛵', '🚲', '🚂', '✈️', '🚁', '⛵'],
-    vivienda: ['🏠', '🏡', '🏢', '🏬', '🏭', '🏗️', '🏘️', '🏚️', '🔑', '🚪', '🛋️', '🛏️', '🕌', '🕍', '⛪'],
-    trabajo: ['💼', '💻', '⌨️', '🖥️', '📱', '📞', '📠', '📊', '📈', '📉', '🖨️', '🗂️'],
-    ocio: ['🎮', '🎯', '🎲', '🎰', '🎪', '🎨', '🎬', '🎭', '🎤', '🎧', '🎵', '🎸', '🎹', '🎺', '🎻'],
-    salud: ['💊', '💉', '🩺', '🩹', '🩼', '⚕️', '🏥', '🚑', '😷', '🧘'],
-    educacion: ['📚', '📖', '📝', '✏️', '🖊️', '📓', '📔', '📕', '📗', '📘', '📙', '🎓', '🏫'],
-    otros: [
-      // ...iconos anteriores...
-      '📦', '🎁', '🛍️', '🛒', '📌', '📍', '🔖', '🏷️', '💡', '🔧', '🔨', '⚙️', '🧰',
-      // ...otros iconos...
-      // Animales
-      '🐶', '🐱', '🐭', '🐹', '🐰', '🦊', '🐻', '🐼', '🐻‍❄️', '🐨', '🐯', '🦁', '🐮', '🐷', '🐽', '🐸', '🐵', '🙈', '🙉', '🙊',
-      '🐒', '🐔', '🐧', '🐦', '🐤', '🐣', '🐥', '🦆', '🦅', '🦉', '🦇', '🐺', '🐗', '🐴',
-      '🐿️', '🦔', '🐾', '🐉', '🐲', '🌵', '🌲', '🌳', '🌴', '🌱', '🌿', '☘️', '🍀', '🎋', '🎍', '🪴',
-      // Ropa y calzado
-      '👕', '👔', '👚', '👗', '👙', '👘', '🥻', '🩱', '🩲', '🩳', '👖', '👠', '👡', '👢', '👞', '👟', '🥾', '🥿', '🧦', '🧤', '🧣', '🧥', '🧢',
-      // ...puedes seguir agregando más si lo deseas...
+    finanzas: ['💰', '💵', '💴', '💶', '💷', '💳', '💸', '🏦', '💹', '🪙', '📊', '📈', '📉', '🧾', '🏧', '💲', '👛', '👜', '🎒', '🛍️', '🛒', '💎', '💍', '👑', '📿', '🔮', '💠', '🤑', '🧧', '🎰'],
+
+    caras: [
+      '😀', '😃', '😄', '😁', '😆', '😅', '🤣', '😂', '🙂', '🙃', '😉', '😊', '😇', '🥰', '😍', '🤩', '😘', '😗', '☺️', '😚', '😙', '😋', '😛', '😜', '�', '😝', '🤑', '🤗', '🤭', '�', '🤔', '🤐', '�', '😐', '😑', '😶', '😏', '😒', '🙄', '😬', '�', '😌', '😔', '😪', '�', '😴', '😷', '�', '🤕', '🤢', '🤮', '🤧', '🥵', '🥶', '🥴', '😵', '�', '�', '�', '😎', '�', '�', '😕', '😟', '🙁', '☹️', '😮', '😯', '😲', '😳', '�', '😦', '😧', '😨', '😰', '😥', '😢', '😭', '😱', '😖', '😣', '😞', '😓', '😩', '😫', '�', '😤', '😡', '😠', '�', '😈', '👿', '💀', '☠️', '💩', '�', '👹', '👺', '👻', '👽', '👾', '🤖'
+    ],
+
+    usuario: [
+      '👤', '👥', '🗣️', '👶', '👧', '🧒', '👦', '👩', '🧑', '👨', '👩‍🦱', '🧑‍🦱', '👨‍🦱', '👩‍�', '�‍🦰', '👨‍�', '👱‍♀️', '👱', '👱‍♂️', '👩‍🦳', '🧑‍🦳', '👨‍�', '👩‍�', '�‍🦲', '👨‍�', '�', '👵', '🧓', '👴', '👲', '👳‍♀️', '👳', '👳‍♂️', '🧕', '👮‍♀️', '👮', '👮‍♂️', '👷‍♀️', '👷', '👷‍♂️', '💂‍♀️', '💂', '💂‍♂️', '🕵️‍♀️', '🕵️', '🕵️‍♂️', '👩‍⚕️', '🧑‍⚕️', '👨‍⚕️', '👩‍�', '🧑‍�', '👨‍�', '👩‍�', '🧑‍�', '👨‍�', '👩‍�', '�‍🎓', '👨‍🎓', '👩‍🎤', '�‍🎤', '👨‍�', '👩‍�', '🧑‍�', '👨‍�', '👩‍�', '🧑‍🏭', '👨‍🏭', '👩‍💻', '🧑‍💻', '👨‍💻', '👩‍💼', '�‍💼', '👨‍💼', '👩‍🔧', '🧑‍🔧', '👨‍🔧', '👩‍🔬', '🧑‍🔬', '👨‍🔬', '👩‍�', '🧑‍�', '👨‍�', '👩‍🚒', '�‍🚒', '👨‍🚒', '👩‍✈️', '�‍✈️', '👨‍✈️', '👩‍🚀', '🧑‍🚀', '👨‍🚀', '👩‍⚖️', '🧑‍⚖️', '👨‍⚖️', '👰', '🤵', '👸', '🤴', '🦸‍♀️', '�', '🦸‍♂️', '🦹‍♀️', '🦹', '🦹‍♂️', '🤶', '�', '�‍♀️', '🧙', '�‍♂️', '🧝‍♀️', '🧝', '🧝‍♂️', '🧛‍♀️', '🧛', '🧛‍♂️', '�‍♀️', '🧟', '�‍♂️', '�‍♀️', '🧞', '🧞‍♂️', '�‍♀️', '�', '🧜‍♂️', '�‍♀️', '🧚', '�‍♂️'
+    ],
+
+    gestos: [
+      '�', '🤚', '�️', '✋', '�', '�', '🤏', '✌️', '🤞', '🤟', '🤘', '🤙', '�', '�', '�', '�', '�', '☝️', '👍', '👎', '✊', '👊', '🤛', '🤜', '�', '�', '�', '�', '�', '🙏', '✍️', '�', '🤳', '💪', '🦾', '🦿', '🦵', '🦶', '�', '🦻', '�', '🧠', '🦷', '🦴', '�', '�️', '�', '�', '�', '🩸'
+    ],
+
+    comida: [
+      '🍽️', '🥤', '🍔', '🍟', '🍕', '🌭', '🥪', '🌮', '🌯', '🥙', '🍳', '🥘', '🍲', '🥣', '🥗', '🍿',
+      '🍞', '🥐', '🥖', '🥨', '🥯', '🥞', '🧇', '🧀', '🍖', '�', '🥩', '🥓',
+      '�', '�', '�', '🍚', '🍛', '�', '�', '�', '�', '🍣', '�', '🍥', '�', '🥟', '🥠', '🥡',
+      '🦀', '🦞', '🦐', '🦑', '🦪', '�', '�', '�', '�', '�', '�', '�', '🧁', '🥧', '�', '�', '�', '�', '�',
+      '�', '🥛', '☕', '�', '🍶', '🍾', '🍷', '🍸', '🍹', '🍺', '🍻', '🥂', '🥃',
+      '�', '�', '�', '�', '🍋', '🍌', '🍍', '🥭', '🍎', '🍏', '🍐', '🍑', '🍒', '🍓', '🥝', '🍅', '�',
+      '🥑', '�', '🥔', '🥕', '🌽', '🌶️', '�', '�', '🍄', '�', '🌰', '�', '�', '🍴', '�', '�'
+    ],
+
+    naturaleza: [
+      '�', '🎄', '🌲', '🌳', '🌴', '🌱', '🌿', '☘️', '�', '�', '🎋', '🍃', '🍂', '🍁', '🍄', '🌾', '💐', '🌷', '🌹', '🥀', '🌺', '🌸', '🌼', '🌻', '�🌞', '🌝', '�', '�', '🌚', '🌕', '🌖', '�', '�', '�', '�', '�', '�', '🌙', '🌎', '🌍', '🌏', '🪐', '💫', '⭐', '🌟', '✨', '⚡', '☄️', '💥', '🔥', '🌪️', '�', '☀️', '�️', '⛅', '�️', '☁️', '�️', '�️', '⛈️', '🌩️', '🌨️', '❄️', '☃️', '⛄', '🌬️', '�', '💧', '💦', '☔', '☂️', '🌊', '🌫️'
+    ],
+
+    animales: [
+      '�', '�', '�', '�', '�', '🦊', '🐻', '🐼', '🐻‍❄️', '🐨', '🐯', '🦁', '�', '�', '�', '�', '�', '�', '�', '🙊', '�',
+      '🐔', '�', '🐦', '�', '�', '�', '🦆', '🦅', '🦉', '🦇', '�', '🐗', '🐴', '🦄',
+      '🐝', '�', '🦋', '�', '�', '�', '🦗', '�️', '�️', '🦂', '🦟', '🦠', '�', '�', '🦎', '🦖', '�', '�', '🦑', '🦐', '🦞', '🦀', '�', '�', '�', '�', '🐳', '�', '🦈', '�', '🐅', '�', '🦓', '🦍', '�', '�', '🐘', '�', '�', '🐪', '�', '🦒', '🦘', '🦬', '�', '�', '�', '�', '�', '🐏', '�', '�', '🦌', '�', '�', '🦮', '�‍🦺', '�', '�‍⬛', '�', '🦃', '🦚', '🦜', '🦢', '🦩', '�️', '�', '🦝', '🦨', '🦡', '🦦', '🦥', '�', '�'
+    ],
+
+    actividades: [
+      '🎮', '🕹️', '🎰', '🎲', '🧩', '🧸', '♠️', '♥️', '♦️', '♣️', '♟️', '🃏', '🀄', '🎴',
+      '🎭', '🖼️', '🎨', '🧵', '🧶',
+      '🎼', '🎵', '🎶', '🎹', '🥁', '🎷', '🎺', '🎸', '🪕', '🎻',
+      '⚽', '🏀', '🏈', '⚾', '🥎', '🎾', '🏐', '🏉', '🥏', '🎱', '🪀', '🏓', '🏸', '🏒', '🏑', '🥍', '🏏', '🥅', '⛳', '🪁', '🏹', '🎣', '🤿', '🥊', '🥋', '🎽', '🛹', '🛷', '⛸️', '🥌', '🎿', '⛷️', '🏂', '🪂', '🏋️', '🤼', '🤸', '⛹️', '🤺', '🤾', '🏌️', '🏇', '🧘', '🏄', '🏊', '🤽', '🚣', '🏆', '🥇', '🥈', '🥉', '🏅', '🎖️', '🏵️',
+      '🎬', '🎥', '🎟️', '🎫', '🎪', '🤸‍♀️', '🤸‍♂️', '🧗‍♀️', '🧗', '🧗‍♂️', '🚴‍♀️', '🚴', '🚴‍♂️', '🚵‍♀️', '🚵', '🚵‍♂️'
+    ],
+
+    viajes: [
+      '�', '�', '🚙', '🚌', '🚎', '🏎️', '🚓', '🚑', '🚒', '🚐', '🚚', '🚛', '�',
+      '🏍️', '�', '�', '�', '🦼', '�', '🛴',
+      '🚂', '🚆', '🚇', '�', '�', '🚋', '�',
+      '✈️', '🛫', '�', '🛩️', '🚁', '�', '�',
+      '⛵', '🚤', '🛥️', '🛳️', '⛴️', '🚢', '⚓',
+      '⛽', '�', '�', '�', '🚏', '�️', '�', '�', '�', '🏰', '🏯', '🏟️', '🎡', '🎢', '🎠', '⛲', '⛱️', '🏖️', '🏝️', '🏜️', '🌋', '⛰️', '🏔️', '�', '🏕️', '⛺',
+      '🌍', '🌎', '🌏', '🎑', '🏜️', '🏝️', '🏞️', '🏟️', '🏛️', '🏗️', '🏘️', '🏙️', '🏚️', '🏠', '🏡', '🏢', '🏣', '🏤', '🏥', '🏦', '🏨', '🏩', '🏪', '🏫', '🏬', '🏭', '🏯', '🏰', '�', '�', '�'
+    ],
+
+    objetos: [
+      '⌚', '📱', '�', '�', '⌨️', '�️', '�️', '�️', '�️', '🕹️', '🗜️', '💽', '💾', '�', '�', '�', '📷', '📸', '📹', '🎥', '📽️', '🎞️', '📞', '☎️', '�', '�', '📺', '�', '🎙️', '🎚️', '🎛️', '�', '⏱️', '⏲️', '⏰', '🕰️', '⌛', '⏳', '�', '�', '🔌', '💡', '🔦', '�️', '�', '�', '🛢️', '💸', '💵', '�', '�', '�', '�', '�', '�', '⚖️', '�', '�', '�', '⚒️', '�️', '⛏️', '🔩', '⚙️', '�', '⛓️', '�', '�', '💣', '�', '�', '�', '�️', '⚔️', '🛡️', '🚬', '⚰️', '⚱️', '🏺', '�', '�', '🧿', '�', '⚗️', '�', '🔬', '�️', '�', '�', '�', '�', '�', '🌡️', '🏷️', '�', '�', '�', '🚿', '🛁', '🛀', '🧼', '🧽', '🪒', '🧺', '🧦', '🧹', '🔑', '🗝️', '🛋️', '🛏️', '🛌', '🧸', '🖼️', '🛍️', '🛒', '�', '�', '�', '�', '�', '�', '🎎', '�', '�', '�', '💌', '🗳️', '📮', '📯', '📜',
+      '👓', '🕶️', '🥽', '🥼', '🦺', '👔', '👕', '👖', '🧣', '🧤', '🧥', '🧦', '👗', '👘', '🥻', '🩱', '🩲', '🩳', '👙', '👚', '👛', '👜', '👝', '🎒', '👞', '👟', '🥾', '🥿', '👠', '👡', '👢', '👑', '👒', '🎩', '🎓', '🧢', '⛑️', '📿', '💄', '💍', '💎'
+    ],
+
+    simbolos: [
+      '❤️', '🧡', '�', '�', '💙', '💜', '🖤', '�', '🤎', '�', '❣️', '�', '💞', '💓', '💗', '💖', '💘', '💝', '💟', '☮️', '✝️', '☪️', '�️', '☸️', '✡️', '�', '🕎', '☯️', '☦️', '🛐', '⛎', '♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓',
+      '🆔', '⚛️', '🉑', '☢️', '☣️', '�', '�', '🈶', '🈚', '🈸', '🈺', '🈷️', '✴️', '🆚', '�', '🉐', '㊙️', '㊗️', '🈴', '🈵', '🈹', '🈲', '🅰️', '🅱️', '🆎', '🆑', '🅾️', '🆘', '❌', '⭕', '�', '⛔', '📛', '🚫', '💯', '💢', '♨️', '🚷', '🚯', '🚳', '🚱', '🔞', '📵', '🚭', '❗', '❕', '❓', '❔', '‼️', '⁉️', '�', '🔆', '〽️', '⚠️', '�', '🔱', '⚜️', '🔰', '♻️', '✅', '�', '�', '❇️', '✳️', '❎', '🌐', '�', 'Ⓜ️', '🌀', '�', '🏧', '🚾', '♿', '🅿️', '🈳', '🈂️', '🛂', '🛃', '🛄', '🛅', '🚹', '🚺', '🚼', '�', '�', '🎦', '�', '🈁', '🆖', '🆗', '🆙', '🆒', '🆕', '🆓', '0️⃣', '1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '�', '�', '#️⃣', '*️⃣', '⏏️', '▶️', '⏸️', '⏯️', '⏹️', '⏺️', '⏭️', '⏮️', '⏩', '⏪', '⏫', '⏬', '◀️', '🔼', '�', '➡️', '⬅️', '⬆️', '⬇️', '↗️', '↘️', '↙️', '↖️', '↕️', '↔️', '↪️', '↩️', '⤴️', '⤵️', '�', '�', '�', '�', '�', '🎵', '🎶', '➕', '➖', '➗', '✖️', '♾️', '�', '�', '™️', '©️', '®️', '👁‍🗨', '🔚', '🔙', '🔛', '🔝', '�', '〰️', '➰', '➿', '✔️', '☑️', '🔘', '🔴', '🟠', '🟡', '🟢', '🔵', '🟣', '⚫', '⚪', '🟤', '🔺', '🔻', '🔸', '🔹', '🔶', '🔷', '🔳', '�', '▪️', '▫️', '◾', '◽', '◼️', '◻️', '🟥', '🟧', '🟨', '🟩', '🟦', '🟪', '⬛', '⬜', '🟫', '🔈', '🔇', '🔉', '🔊', '🔔', '🔕', '📣', '📢', '�', '💭', '�️'
+    ],
+
+    banderas: [
+      '🏳️', '🏴', '🏁', '�', '🏳️‍🌈', '🏴‍☠️', '🇦🇫', '🇦🇽', '🇦🇱', '🇩🇿', '🇦🇸', '🇦🇩', '🇦🇴', '🇦🇮', '🇦🇶', '🇦🇬', '🇦🇷', '🇦🇲', '🇦🇼', '🇦🇺', '🇦🇹', '🇦🇿', '🇧🇸', '🇧🇭', '🇧🇩', '🇧🇧', '🇧🇾', '🇧🇪', '🇧🇿', '🇧🇯', '🇧🇲', '🇧🇹', '🇧🇴', '🇧🇦', '🇧🇼', '🇧🇷', '🇮🇴', '🇻🇬', '🇧🇳', '🇧🇬', '🇧🇫', '🇧🇮', '🇰🇭', '🇨🇲', '🇨🇦', '🇮🇨', '🇨🇻', '🇧🇶', '🇰🇾', '🇨🇫', '🇹🇩', '🇨🇱', '🇨🇳', '🇨🇽', '🇨🇨', '🇨🇴', '🇰🇲', '🇨🇬', '🇨🇩', '🇨🇰', '🇨🇷', '🇨🇮', '🇭🇷', '🇨🇺', '🇨🇼', '🇨🇾', '🇨🇿', '🇩🇰', '🇩🇯', '🇩🇲', '🇩🇴', '🇪🇨', '🇪🇬', '🇸🇻', '🇬🇶', '🇪🇷', '🇪🇪', '🇪🇹', '🇪🇺', '🇫🇰', '🇫🇴', '🇫🇯', '🇫🇮', '🇫🇷', '🇬🇫', '🇵🇫', '🇹🇫', '🇬🇦', '🇬🇲', '🇬🇪', '🇩🇪', '🇬🇭', '🇬🇮', '🇬🇷', '🇬🇱', '🇬🇩', '🇬🇵', '🇬🇺', '🇬🇹', '🇬🇬', '🇬🇳', '🇬🇼', '🇬🇾', '🇭🇹', '🇭🇳', '🇭🇰', '🇭🇺', '🇮🇸', '🇮🇳', '🇮🇩', '🇮🇷', '🇮🇶', '🇮🇪', '🇮🇲', '🇮🇱', '🇮🇹', '🇯🇲', '🇯🇵', '🎌', '🇯🇪', '🇯🇴', '🇰🇿', '🇰🇪', '🇰🇮', '🇽🇰', '🇰🇼', '🇰🇬', '🇱🇦', '🇱🇻', '🇱🇧', '🇱🇸', '🇱🇷', '🇱🇾', '🇱🇮', '🇱🇹', '🇱🇺', '🇲🇴', '🇲🇰', '🇲🇬', '🇲🇼', '🇲🇾', '🇲🇻', '🇲🇱', '🇲🇹', '🇲🇭', '🇲🇶', '🇲🇷', '🇲🇺', '🇾🇹', '🇲🇽', '🇫🇲', '🇲🇩', '🇲🇨', '🇲🇳', '🇲🇪', '🇲🇸', '🇲🇦', '🇲🇿', '🇲🇲', '🇳🇦', '🇳🇷', '🇳🇵', '🇳🇱', '🇳🇨', '🇳🇿', '🇳🇮', '🇳🇪', '🇳🇬', '🇳🇺', '🇳🇫', '🇰🇵', '🇲🇵', '🇳🇴', '🇴🇲', '🇵🇰', '🇵🇼', '🇵🇸', '🇵🇦', '🇵🇬', '🇵🇾', '🇵🇪', '🇵🇭', '🇵🇳', '🇵🇱', '🇵🇹', '🇵🇷', '🇶🇦', '🇷🇪', '🇷🇴', '🇷🇺', '🇷🇼', '🇼🇸', '🇸🇲', '🇸🇦', '🇸🇳', '🇷🇸', '🇸🇨', '🇸🇱', '🇸🇬', '🇸🇽', '🇸🇰', '🇸🇮', '🇬🇸', '🇸🇧', '🇸🇴', '🇿🇦', '🇰🇷', '🇸🇸', '🇪🇸', '🇱🇰', '🇧🇱', '🇸🇭', '🇰🇳', '🇱e', '🇵🇲', '🇻🇨', '🇸🇩', '🇸🇷', '🇸🇿', '🇸🇪', '🇨🇭', '🇸🇾', '🇹🇼', '🇹🇯', '🇹🇿', '🇹🇭', '🇹🇱', '🇹🇬', '🇹🇰', '🇹🇴', '🇹�', '🇹�', '🇹�', '🇹�', '🇹�', '🇹�', '🇺�', '🇺�', '🇦�', '🇬�', '🇺🇸', '🇺🇾', '🇺🇿', '🇻🇺', '🇻🇦', '🇻🇪', '🇻�', '🇼🇫', '🇪🇭', '🇾🇪', '🇿🇲', '🇿🇼'
     ]
   },
 
@@ -195,23 +240,23 @@ const ConfigModel = {
     }
     Logger.log('ConfigModel inicializado');
   },
-  
+
   // Sincronizar toda la configuración local con Atlas
   async syncAllToAtlas() {
     const config = this.getLocalConfig();
     if (!config) return;
-    
+
     const modulos = Object.keys(config);
     for (const modulo of modulos) {
       await this.syncToAtlas(modulo, config[modulo]);
     }
   },
-  
+
   // Migrar configuración antigua agregando categorías faltantes
   migrateConfig(config) {
     let updated = false;
     const modulosActualizados = new Set(); // Usar Set para evitar duplicados
-    
+
     // Inicializar patrimonio_activos si no existe
     if (!config.patrimonio_activos) {
       config.patrimonio_activos = this.DEFAULT_CONFIG.patrimonio_activos;
@@ -225,80 +270,80 @@ const ConfigModel = {
       Logger.log('Categorías de activos inicializadas');
     } else {
       // Verificar y agregar categoría 'efectivo' en activos si no existe
-        const efectivoIndex = config.patrimonio_activos.categorias.findIndex(cat => cat.id === 'efectivo');
-        const efectivoDefault = this.DEFAULT_CONFIG.patrimonio_activos.categorias.find(cat => cat.id === 'efectivo');
-        if (efectivoIndex === -1) {
-          config.patrimonio_activos.categorias.unshift({ ...efectivoDefault });
+      const efectivoIndex = config.patrimonio_activos.categorias.findIndex(cat => cat.id === 'efectivo');
+      const efectivoDefault = this.DEFAULT_CONFIG.patrimonio_activos.categorias.find(cat => cat.id === 'efectivo');
+      if (efectivoIndex === -1) {
+        config.patrimonio_activos.categorias.unshift({ ...efectivoDefault });
+        updated = true;
+        modulosActualizados.add('patrimonio_activos');
+        Logger.log('Categoría "efectivo" agregada a activos');
+      } else {
+        // Actualizar solo si hay diferencias
+        const cat = config.patrimonio_activos.categorias[efectivoIndex];
+        if (cat.nombre !== efectivoDefault.nombre ||
+          cat.icono !== efectivoDefault.icono ||
+          cat.ayuda !== efectivoDefault.ayuda ||
+          !cat.sistema) {
+          cat.nombre = efectivoDefault.nombre;
+          cat.icono = efectivoDefault.icono;
+          cat.ayuda = efectivoDefault.ayuda;
+          cat.sistema = true;
           updated = true;
           modulosActualizados.add('patrimonio_activos');
-          Logger.log('Categoría "efectivo" agregada a activos');
-        } else {
-          // Actualizar solo si hay diferencias
-          const cat = config.patrimonio_activos.categorias[efectivoIndex];
-          if (cat.nombre !== efectivoDefault.nombre || 
-              cat.icono !== efectivoDefault.icono || 
-              cat.ayuda !== efectivoDefault.ayuda || 
-              !cat.sistema) {
-            cat.nombre = efectivoDefault.nombre;
-            cat.icono = efectivoDefault.icono;
-            cat.ayuda = efectivoDefault.ayuda;
-            cat.sistema = true;
-            updated = true;
-            modulosActualizados.add('patrimonio_activos');
-            Logger.log('Categoría "efectivo" actualizada desde DEFAULT_CONFIG');
-          }
+          Logger.log('Categoría "efectivo" actualizada desde DEFAULT_CONFIG');
         }
-      
+      }
+
       // Verificar y marcar categoría 'cuentas' como sistema
-        const cuentasIndex = config.patrimonio_activos.categorias.findIndex(cat => cat.id === 'cuentas');
-        const cuentasDefault = this.DEFAULT_CONFIG.patrimonio_activos.categorias.find(cat => cat.id === 'cuentas');
-        if (cuentasIndex !== -1) {
-          const cat = config.patrimonio_activos.categorias[cuentasIndex];
-          if (cat.nombre !== cuentasDefault.nombre || 
-              cat.icono !== cuentasDefault.icono || 
-              cat.ayuda !== cuentasDefault.ayuda || 
-              !cat.sistema) {
-            cat.nombre = cuentasDefault.nombre;
-            cat.icono = cuentasDefault.icono;
-            cat.ayuda = cuentasDefault.ayuda;
-            cat.sistema = true;
-            updated = true;
-            modulosActualizados.push('patrimonio_activos');
-            Logger.log('Categoría "cuentas" actualizada desde DEFAULT_CONFIG');
-          }
-        }
-      
-      // Verificar y agregar categoría 'cuentas_cobrar' en activos si no existe
-        const cuentasCobrarIndex = config.patrimonio_activos.categorias.findIndex(cat => cat.id === 'cuentas_cobrar');
-        const cuentasCobrarDefault = this.DEFAULT_CONFIG.patrimonio_activos.categorias.find(cat => cat.id === 'cuentas_cobrar');
-        if (cuentasCobrarIndex === -1) {
-          const insertIndex = config.patrimonio_activos.categorias.findIndex(cat => cat.id === 'cuentas');
-          if (insertIndex !== -1) {
-            config.patrimonio_activos.categorias.splice(insertIndex + 1, 0, { ...cuentasCobrarDefault });
-          } else {
-            config.patrimonio_activos.categorias.unshift({ ...cuentasCobrarDefault });
-          }
+      const cuentasIndex = config.patrimonio_activos.categorias.findIndex(cat => cat.id === 'cuentas');
+      const cuentasDefault = this.DEFAULT_CONFIG.patrimonio_activos.categorias.find(cat => cat.id === 'cuentas');
+      if (cuentasIndex !== -1) {
+        const cat = config.patrimonio_activos.categorias[cuentasIndex];
+        if (cat.nombre !== cuentasDefault.nombre ||
+          cat.icono !== cuentasDefault.icono ||
+          cat.ayuda !== cuentasDefault.ayuda ||
+          !cat.sistema) {
+          cat.nombre = cuentasDefault.nombre;
+          cat.icono = cuentasDefault.icono;
+          cat.ayuda = cuentasDefault.ayuda;
+          cat.sistema = true;
           updated = true;
-          modulosActualizados.add('patrimonio_activos');
-          Logger.log('Categoría "cuentas_cobrar" agregada a activos');
-        } else {
-          // Actualizar solo si hay diferencias
-          const cat = config.patrimonio_activos.categorias[cuentasCobrarIndex];
-          if (cat.nombre !== cuentasCobrarDefault.nombre || 
-              cat.icono !== cuentasCobrarDefault.icono || 
-              cat.ayuda !== cuentasCobrarDefault.ayuda || 
-              !cat.sistema) {
-            cat.nombre = cuentasCobrarDefault.nombre;
-            cat.icono = cuentasCobrarDefault.icono;
-            cat.ayuda = cuentasCobrarDefault.ayuda;
-            cat.sistema = true;
-            updated = true;
-            modulosActualizados.push('patrimonio_activos');
-            Logger.log('Categoría "cuentas_cobrar" actualizada desde DEFAULT_CONFIG');
-          }
+          modulosActualizados.push('patrimonio_activos');
+          Logger.log('Categoría "cuentas" actualizada desde DEFAULT_CONFIG');
         }
+      }
+
+      // Verificar y agregar categoría 'cuentas_cobrar' en activos si no existe
+      const cuentasCobrarIndex = config.patrimonio_activos.categorias.findIndex(cat => cat.id === 'cuentas_cobrar');
+      const cuentasCobrarDefault = this.DEFAULT_CONFIG.patrimonio_activos.categorias.find(cat => cat.id === 'cuentas_cobrar');
+      if (cuentasCobrarIndex === -1) {
+        const insertIndex = config.patrimonio_activos.categorias.findIndex(cat => cat.id === 'cuentas');
+        if (insertIndex !== -1) {
+          config.patrimonio_activos.categorias.splice(insertIndex + 1, 0, { ...cuentasCobrarDefault });
+        } else {
+          config.patrimonio_activos.categorias.unshift({ ...cuentasCobrarDefault });
+        }
+        updated = true;
+        modulosActualizados.add('patrimonio_activos');
+        Logger.log('Categoría "cuentas_cobrar" agregada a activos');
+      } else {
+        // Actualizar solo si hay diferencias
+        const cat = config.patrimonio_activos.categorias[cuentasCobrarIndex];
+        if (cat.nombre !== cuentasCobrarDefault.nombre ||
+          cat.icono !== cuentasCobrarDefault.icono ||
+          cat.ayuda !== cuentasCobrarDefault.ayuda ||
+          !cat.sistema) {
+          cat.nombre = cuentasCobrarDefault.nombre;
+          cat.icono = cuentasCobrarDefault.icono;
+          cat.ayuda = cuentasCobrarDefault.ayuda;
+          cat.sistema = true;
+          updated = true;
+          modulosActualizados.push('patrimonio_activos');
+          Logger.log('Categoría "cuentas_cobrar" actualizada desde DEFAULT_CONFIG');
+        }
+      }
     }
-    
+
     // Inicializar patrimonio_pasivos si no existe
     if (!config.patrimonio_pasivos) {
       config.patrimonio_pasivos = this.DEFAULT_CONFIG.patrimonio_pasivos;
@@ -328,11 +373,11 @@ const ConfigModel = {
         Logger.log('Categoría "deudas" marcada como sistema');
       }
     }
-    
+
     if (updated) {
       this.saveLocalConfig(config);
       Logger.success('Configuración migrada con nuevas categorías');
-      
+
       // Sincronizar módulos actualizados con MongoDB
       modulosActualizados.forEach(modulo => {
         this.syncToAtlas(modulo, config[modulo]);
@@ -372,7 +417,7 @@ const ConfigModel = {
     const config = this.getLocalConfig() || this.DEFAULT_CONFIG;
     config[modulo] = moduleConfig;
     this.saveLocalConfig(config);
-    
+
     // Sincronizar con Atlas
     this.syncToAtlas(modulo, moduleConfig);
   },
@@ -385,12 +430,12 @@ const ConfigModel = {
         campos: moduleConfig.campos,
         fechaModificacion: new Date().toISOString()
       };
-      
+
       // Incluir categorías si el módulo las tiene
       if (moduleConfig.categorias) {
         payload.categorias = moduleConfig.categorias;
       }
-      
+
       const response = await fetch(`${this.API_BASE}/configuracion/${modulo}`, {
         method: 'PUT',
         headers: {
@@ -412,28 +457,28 @@ const ConfigModel = {
   // Cargar configuración desde Atlas
   async loadFromAtlas(modulo = null) {
     try {
-      const url = modulo 
+      const url = modulo
         ? `${this.API_BASE}/configuracion/${modulo}`
         : `${this.API_BASE}/configuracion`;
-      
+
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         throw new Error('Error cargando configuración desde Atlas');
       }
 
       const data = await response.json();
-      
+
       if (modulo) {
         // Cargar un módulo específico
         const config = this.getLocalConfig() || this.DEFAULT_CONFIG;
         config[modulo] = { campos: data.campos };
-        
+
         // Incluir categorías si existen (para patrimonio)
         if (data.categorias) {
           config[modulo].categorias = data.categorias;
         }
-        
+
         this.saveLocalConfig(config);
         Logger.success(`Configuración de ${modulo} cargada desde Atlas`);
       } else {
@@ -441,7 +486,7 @@ const ConfigModel = {
         const config = {};
         data.forEach(item => {
           config[item.modulo] = { campos: item.campos };
-          
+
           // Incluir categorías si existen (para patrimonio)
           if (item.categorias) {
             config[item.modulo].categorias = item.categorias;
@@ -462,15 +507,15 @@ const ConfigModel = {
   // Añadir campo personalizado a un módulo
   addCustomField(modulo, campo) {
     const config = this.getModuleConfig(modulo);
-    
+
     // Generar ID único para el campo
     campo.id = campo.id || `custom_${Date.now()}`;
     campo.sistema = false;
     campo.orden = config.campos.length + 1;
-    
+
     config.campos.push(campo);
     this.saveModuleConfig(modulo, config);
-    
+
     return campo;
   },
 
@@ -478,18 +523,18 @@ const ConfigModel = {
   updateField(modulo, campoId, campoData) {
     const config = this.getModuleConfig(modulo);
     const index = config.campos.findIndex(c => c.id === campoId);
-    
+
     if (index !== -1) {
       // No permitir modificar campos del sistema
       if (config.campos[index].sistema) {
         throw new Error('No se puede modificar un campo del sistema');
       }
-      
+
       config.campos[index] = { ...config.campos[index], ...campoData };
       this.saveModuleConfig(modulo, config);
       return config.campos[index];
     }
-    
+
     throw new Error('Campo no encontrado');
   },
 
@@ -497,15 +542,15 @@ const ConfigModel = {
   deleteField(modulo, campoId) {
     const config = this.getModuleConfig(modulo);
     const campo = config.campos.find(c => c.id === campoId);
-    
+
     if (!campo) {
       throw new Error('Campo no encontrado');
     }
-    
+
     if (campo.sistema) {
       throw new Error('No se puede eliminar un campo del sistema');
     }
-    
+
     config.campos = config.campos.filter(c => c.id !== campoId);
     this.saveModuleConfig(modulo, config);
   },
@@ -524,15 +569,15 @@ const ConfigModel = {
   addSelectOption(modulo, campoId, opcion) {
     const config = this.getModuleConfig(modulo);
     const campo = config.campos.find(c => c.id === campoId);
-    
+
     if (!campo || campo.tipo !== 'select') {
       throw new Error('Campo no encontrado o no es de tipo select');
     }
-    
+
     if (!campo.opciones) {
       campo.opciones = [];
     }
-    
+
     campo.opciones.push(opcion);
     this.saveModuleConfig(modulo, config);
   },
@@ -541,17 +586,17 @@ const ConfigModel = {
   deleteSelectOption(modulo, campoId, valorOpcion) {
     const config = this.getModuleConfig(modulo);
     const campo = config.campos.find(c => c.id === campoId);
-    
+
     if (!campo || campo.tipo !== 'select') {
       throw new Error('Campo no encontrado o no es de tipo select');
     }
-    
+
     campo.opciones = campo.opciones.filter(o => o.valor !== valorOpcion);
     this.saveModuleConfig(modulo, config);
   },
 
   // === GESTIÓN DE CATEGORÍAS (PATRIMONIO) ===
-  
+
   // Obtener categorías de un módulo
   getCategorias(modulo) {
     const config = this.getModuleConfig(modulo);
@@ -561,17 +606,17 @@ const ConfigModel = {
   // Añadir categoría
   addCategoria(modulo, categoria) {
     const config = this.getModuleConfig(modulo);
-    
+
     if (!config.categorias) {
       config.categorias = [];
     }
-    
+
     // Generar ID único para la categoría
     categoria.id = categoria.id || `cat_${Date.now()}`;
-    
+
     config.categorias.push(categoria);
     this.saveModuleConfig(modulo, config);
-    
+
     return categoria;
   },
 
@@ -579,30 +624,30 @@ const ConfigModel = {
   updateCategoria(modulo, categoriaId, categoriaData) {
     const config = this.getModuleConfig(modulo);
     const index = config.categorias.findIndex(c => c.id === categoriaId);
-    
+
     if (index !== -1) {
       config.categorias[index] = { ...config.categorias[index], ...categoriaData };
       this.saveModuleConfig(modulo, config);
       return config.categorias[index];
     }
-    
+
     throw new Error('Categoría no encontrada');
   },
 
   // Eliminar categoría
   deleteCategoria(modulo, categoriaId) {
     const config = this.getModuleConfig(modulo);
-    
+
     if (!config.categorias) {
       throw new Error('No hay categorías configuradas');
     }
-    
+
     const categoria = config.categorias.find(c => c.id === categoriaId);
-    
+
     if (categoria && categoria.sistema) {
       throw new Error('No se puede eliminar una categoría del sistema');
     }
-    
+
     config.categorias = config.categorias.filter(c => c.id !== categoriaId);
     this.saveModuleConfig(modulo, config);
   },
