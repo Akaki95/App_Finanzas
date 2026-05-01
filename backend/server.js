@@ -22,7 +22,8 @@ const corsOptions = {
       'http://127.0.0.1:8888',
       'https://finanzas-akaki-alondra.onrender.com',
       'https://finanzas-renato-karina-qhn3.onrender.com',
-      'https://rossy.onrender.com'
+      'https://rossy.onrender.com',
+      'https://finanzas-max-shir.onrender.com'
     ];
     
     if (allowedOrigins.indexOf(origin) !== -1) {

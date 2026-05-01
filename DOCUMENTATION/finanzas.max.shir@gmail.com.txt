@@ -1,0 +1,5 @@
+finanzas.max.shir@gmail.com
+Lima2026
+
+mongodb+srv://finanzasmaxshir_db_user:P9juP1PwuISgKW5H@cluster0.atdmglu.mongodb.net/?appName=Cluster0
+
