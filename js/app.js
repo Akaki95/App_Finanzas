@@ -1,6 +1,22 @@
 // App Principal - Punto de entrada de la aplicación
 (function() {
   'use strict';
+
+  function registerServiceWorker() {
+    if (!('serviceWorker' in navigator)) {
+      return;
+    }
+
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(() => {
+          Logger.log('Service Worker registrado');
+        })
+        .catch((error) => {
+          Logger.error('Error registrando Service Worker', error);
+        });
+    });
+  }
   
   // Inicializar la aplicación
   async function init() {
@@ -477,6 +493,8 @@
   } else {
     init();
   }
+
+  registerServiceWorker();
   
 })();
 
