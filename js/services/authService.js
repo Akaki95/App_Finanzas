@@ -13,7 +13,12 @@ const AuthService = {
     try {
       const apiBase = window.APP_ENV?.API_BASE?.replace('/api', '') || 'http://localhost:3000';
       const response = await fetch(`${apiBase}/api/auth/status`, {
-        mode: 'cors'
+        mode: 'cors',
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache'
+        }
       });
       
       if (!response.ok) {
@@ -373,6 +378,21 @@ No compartas estos códigos con nadie.
 
       const data = await response.json();
 
+      if (!response.ok && typeof data.error === 'string') {
+        const normalizedError = data.error.toLowerCase();
+        if (normalizedError.includes('ya existe una configur') && normalizedError.includes('autentic')) {
+          localStorage.removeItem('auth_token');
+          this.showLogin();
+
+          const loginErrorDiv = document.getElementById('login-error');
+          if (loginErrorDiv) {
+            loginErrorDiv.textContent = 'La contrasena ya estaba configurada. Inicia sesion con esa contrasena.';
+            loginErrorDiv.classList.add('show');
+          }
+          return;
+        }
+      }
+
       if (!response.ok) {
         throw new Error(data.error || 'Error al registrar');
       }
@@ -380,6 +400,18 @@ No compartas estos códigos con nadie.
       // Registro exitoso, mostrar códigos de respaldo
       this.showRecoveryCode(data.backupCodes);
     } catch (error) {
+      if (error.message === 'Ya existe una configuraciÃ³n de autenticaciÃ³n') {
+        localStorage.removeItem('auth_token');
+        this.showLogin();
+
+        const loginErrorDiv = document.getElementById('login-error');
+        if (loginErrorDiv) {
+          loginErrorDiv.textContent = 'La contraseÃ±a ya estaba configurada. Inicia sesiÃ³n con esa contraseÃ±a.';
+          loginErrorDiv.classList.add('show');
+        }
+        return;
+      }
+
       errorDiv.textContent = error.message;
       errorDiv.classList.add('show');
       btn.disabled = false;
