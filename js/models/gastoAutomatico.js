@@ -89,7 +89,7 @@ const GastoAutomaticoModel = {
       this.API_BASE = ConfigModel.API_BASE;
     }
     try {
-      const res = await fetch(`${this.API_BASE}/api/gastos_automaticos/${id}`, {
+      const res = await fetch(`${this.API_BASE}/gastos_automaticos/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reglaData)
@@ -113,7 +113,7 @@ const GastoAutomaticoModel = {
       this.API_BASE = ConfigModel.API_BASE;
     }
     try {
-      const res = await fetch(`${this.API_BASE}/api/gastos_automaticos/${id}`, {
+      const res = await fetch(`${this.API_BASE}/gastos_automaticos/${id}`, {
         method: 'DELETE'
       });
       const json = await res.json();

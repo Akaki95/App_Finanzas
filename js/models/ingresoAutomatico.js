@@ -83,7 +83,7 @@ const IngresoAutomaticoModel = {
   // Actualizar regla en MongoDB Atlas
   async update(id, reglaData) {
     try {
-      const res = await fetch(`${this.API_BASE}/api/ingresos_automaticos/${id}`, {
+      const res = await fetch(`${this.API_BASE}/ingresos_automaticos/${id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reglaData)
@@ -103,7 +103,7 @@ const IngresoAutomaticoModel = {
   // Eliminar regla en MongoDB Atlas
   async delete(id) {
     try {
-      const res = await fetch(`${this.API_BASE}/api/ingresos_automaticos/${id}`, {
+      const res = await fetch(`${this.API_BASE}/ingresos_automaticos/${id}`, {
         method: 'DELETE'
       });
       const json = await res.json();
